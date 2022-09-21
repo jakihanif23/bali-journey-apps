@@ -62,7 +62,9 @@ class _AccountState extends State<Account> {
                     padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                     child: InkWell(
                       onTap: (){
-                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>LoginPage()));
+                        Navigator.of(context, rootNavigator: true).push(
+                            CupertinoPageRoute(builder: (context)=>LoginPage())
+                        );
                       },
                       child: LoginButton('Login'),
                     )

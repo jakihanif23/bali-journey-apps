@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/homepage/account.dart';
+import 'package:wisata_bali/homepage/categorypage.dart';
 import 'package:wisata_bali/widgets/card.dart';
 import 'package:wisata_bali/widgets/category.dart';
 
@@ -50,7 +51,9 @@ class _HomeState extends State<Home> {
                     ),
                     InkWell(
                       onTap: (){
-                        Navigator.push(context, CupertinoPageRoute(builder: (context)=>Account()));
+                        Navigator.of(context).push(
+                            CupertinoPageRoute(builder: (context)=>Account())
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
@@ -73,7 +76,14 @@ class _HomeState extends State<Home> {
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                        child: CategoryWidgets('$index'),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, CupertinoPageRoute(builder: (context)=>CategoryPage(cateId: index)));
+                          },
+                          child: CategoryWidgets(
+                              'Category $index'
+                          ),
+                        ),
                       );
                     },
                   ),
