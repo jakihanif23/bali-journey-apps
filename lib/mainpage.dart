@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                 BottomNavigationBarItem(
                     activeIcon: Icon(CustomIcons.heart),
                     icon: Icon(CustomIcons.heart_empty),
-                    label: "Likes"),
+                    label: "Wishlist"),
                 BottomNavigationBarItem(
                     activeIcon: Icon(CustomIcons.mountain),
                     icon: Icon(CustomIcons.mountain),
