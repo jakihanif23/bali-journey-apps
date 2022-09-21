@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
-import 'package:wisata_bali/homepage/account.dart';
-import 'package:wisata_bali/homepage/categorypage.dart';
+import 'package:wisata_bali/pages/accountpage.dart';
+import 'package:wisata_bali/pages/categorypage.dart';
 import 'package:wisata_bali/widgets/card.dart';
 import 'package:wisata_bali/widgets/category.dart';
 
@@ -142,26 +142,24 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
                   height: 300,
                   child: Container(
-                    child: ListView(
+                    child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      children: [
-                        Container(
+                      itemCount: images.length,
+                      itemBuilder: (context, index){
+                        return Container(
                           padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: CardWidgets('assets/beach.jpg'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: CardWidgets('assets/bg.jpg'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: CardWidgets('assets/bg.jpg'),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: CardWidgets('assets/beach.jpg'),
-                        ),
-                      ],
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(
+                                  CupertinoPageRoute(builder: (context)=>DetailDestination(destinationId: index, image: images[index],))
+                              );
+                            },
+                            child: CardWidgets(
+                                images[index]
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   )
               ),

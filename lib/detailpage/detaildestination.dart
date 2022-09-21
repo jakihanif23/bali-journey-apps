@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wisata_bali/widgets/destinationreviewscard.dart';
 import 'package:wisata_bali/widgets/givereviewsbutton.dart';
 import 'package:wisata_bali/widgets/login_button.dart';
 
@@ -95,7 +96,10 @@ class _DetailDestinationState extends State<DetailDestination> {
                         ),
                       ),
                       Expanded(
-                        child: GiveReviewButton(),
+                        child: InkWell(
+                          onTap: (){},
+                          child: GiveReviewButton(),
+                        ),
                       )
                     ],
                   ),
@@ -113,88 +117,23 @@ class _DetailDestinationState extends State<DetailDestination> {
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Container(
-                        padding: EdgeInsets.only(top: 20),
-                        child: Container(
-                          width: 377,
-                          height: 191,
-                          decoration: BoxDecoration(
-                              color: Color(0xffD9F9F8),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      child: ListView.builder(
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Container(
-                                    child: Container(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(10),
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage:
-                                                  AssetImage('assets/man.jpg'),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 10, 0, 0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Mamang Kesbor',
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight: FontWeight.bold
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'New Delhi',
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                      child: Text(
-                                                          'Bintang di surga'))
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              padding: EdgeInsets.fromLTRB(0, 15, 10, 0),
-                                              alignment: Alignment.topRight,
-                                              child: Text(
-                                                '20 Desember 2021',
-                                                style: TextStyle(
-                                                  fontSize: 8,
-                                                  fontStyle: FontStyle.italic
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                    child: Text('lorem ipsum dolor sit amet'),
-                                  ),
-                                )
+                                SizedBox(height: 10,),
+                                DestinationReviewCard()
                               ],
-                            ),
-                          ),
-                        ))
+                            )
+                          );
+                        },
+                      ),
+                    )
                   ],
                 ),
               )

@@ -1,12 +1,12 @@
 import 'package:custom_top_navigator/custom_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:wisata_bali/homepage/account.dart';
-import 'package:wisata_bali/homepage/cart.dart';
-import 'package:wisata_bali/homepage/home.dart';
-import 'package:wisata_bali/homepage/like.dart';
-import 'package:wisata_bali/homepage/packagetrip.dart';
-import 'package:wisata_bali/homepage/shop.dart';
 import 'package:wisata_bali/icons/custom_icons_icons.dart';
+import 'package:wisata_bali/pages/cartpage.dart';
+import 'package:wisata_bali/pages/homepage.dart';
+import 'package:wisata_bali/pages/packagetrip.dart';
+import 'package:wisata_bali/pages/wishlistpage.dart';
+
+import 'pages/searchpage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> pages = [Home(), Like(), PackageTrip(), Search(), CartPage()];
+  List<Widget> pages = [Home(), Wishlist(), PackageTrip(), Search(), CartPage()];
   int current = 0;
 
   void onTap(int index) {
@@ -45,9 +45,9 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(Icons.home_outlined),
                     label: "Home"),
                 BottomNavigationBarItem(
-                    activeIcon: Icon(Icons.bookmark_outlined),
-                    icon: Icon(Icons.bookmark_border),
-                    label: "Bookmark"),
+                    activeIcon: Icon(CustomIcons.heart),
+                    icon: Icon(CustomIcons.heart_empty),
+                    label: "Likes"),
                 BottomNavigationBarItem(
                     activeIcon: Icon(CustomIcons.mountain),
                     icon: Icon(CustomIcons.mountain),

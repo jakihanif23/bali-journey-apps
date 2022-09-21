@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wisata_bali/homepage/account.dart';
+import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/widgets/card.dart';
 
 class CategoryPage extends StatefulWidget {
