@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/widgets/buttonyellow.dart';
 import 'package:wisata_bali/widgets/card.dart';
 import 'package:wisata_bali/widgets/category.dart';
@@ -63,7 +64,18 @@ class _PackageTripState extends State<PackageTrip> {
                     padding: EdgeInsets.all(10.0),
                     itemCount: 5,
                     itemBuilder: (context, index){
-                      return PackageTripCard('Title $index', 'assets/beach.jpg', 'Price $index');
+                      return InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(
+                            CupertinoPageRoute(builder: (_)=>DetailPackageTrip(packageTripId: index, image: 'assets/beach.jpg',))
+                          );
+                        },
+                        child: PackageTripCard(
+                            'Title $index',
+                            'assets/beach.jpg',
+                            'Price $index'
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -77,7 +89,6 @@ class _PackageTripState extends State<PackageTrip> {
                       ],
                     )
                 ),
-
               ],
             )
         ),

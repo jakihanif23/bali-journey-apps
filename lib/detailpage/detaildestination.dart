@@ -97,7 +97,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                       ),
                       Expanded(
                         child: InkWell(
-                          onTap: (){},
+                          onTap: () {},
                           child: GiveReviewButton(),
                         ),
                       )
@@ -123,14 +123,15 @@ class _DetailDestinationState extends State<DetailDestination> {
                         itemCount: 5,
                         itemBuilder: (context, index) {
                           return Container(
-                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 10,),
-                                DestinationReviewCard()
-                              ],
-                            )
-                          );
+                              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  DestinationReviewCard()
+                                ],
+                              ));
                         },
                       ),
                     )
