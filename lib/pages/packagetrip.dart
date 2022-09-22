@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wisata_bali/widgets/buttonyellow.dart';
 import 'package:wisata_bali/widgets/card.dart';
 import 'package:wisata_bali/widgets/category.dart';
 import 'package:wisata_bali/widgets/packagetripcard.dart';
@@ -56,8 +57,7 @@ class _PackageTripState extends State<PackageTrip> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.80,
-                  padding: EdgeInsets.only(bottom: 40),
+                  height: MediaQuery.of(context).size.height * 0.64,
                   child: ListView.builder(
                     shrinkWrap: true,
                     padding: EdgeInsets.all(10.0),
@@ -66,7 +66,18 @@ class _PackageTripState extends State<PackageTrip> {
                       return PackageTripCard('Title $index', 'assets/beach.jpg', 'Price $index');
                     },
                   ),
-                )
+                ),
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.only(top: 15),
+                    height: 70,
+                    child: Column(
+                      children: [
+                        ButtonYellow(title: 'Filter')
+                      ],
+                    )
+                ),
+
               ],
             )
         ),
