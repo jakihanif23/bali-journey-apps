@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class PackageTripCard extends StatelessWidget {
   final String title;
   final String image;
   final String price;
-  PackageTripCard(this.title, this.image, this.price);
+  final double rating;
+  PackageTripCard(this.title, this.image, this.price, this.rating);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +16,6 @@ class PackageTripCard extends StatelessWidget {
         Container(
           height: 133,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              border: Border.all()
-          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -33,38 +32,37 @@ class PackageTripCard extends StatelessWidget {
               Expanded(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Expanded(
-                        child: Center(
-                          child: Container(
-                            child: Text(
-                              title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Color(0xff136068)
-                              ),
-                            ),
+                      Container(
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Color(0xff136068)
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          color: Colors.blue,
-                        ),
+                      Container(
+                        child: RatingBarIndicator(
+                          rating: rating,
+                          itemCount: 5,
+                          itemSize: 23,
+                          itemBuilder: (context, index)=>Icon(Icons.star, color: Color(0xff136068),),
+                        )
                       ),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'IDR $price /pax',
-                            style: TextStyle(
-                                color: Color(0xff136068),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w100
-                            ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'IDR $price /pax',
+                          style: TextStyle(
+                              color: Color(0xff136068),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w100
                           ),
                         ),
                       )

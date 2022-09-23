@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
+import 'package:wisata_bali/models/listmodels.dart';
 import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/pages/categorypage.dart';
 import 'package:wisata_bali/widgets/card.dart';
@@ -15,9 +16,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> images = ['assets/bg.jpg', 'assets/beach.jpg', 'assets/bg.jpg', 'assets/beach.jpg'];
   @override
   Widget build(BuildContext context) {
+    List<String> images = ['assets/bg.jpg', 'assets/beach.jpg', 'assets/bg.jpg', 'assets/beach.jpg'];
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
