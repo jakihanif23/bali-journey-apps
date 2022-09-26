@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
+import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/listmodels.dart';
 import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/pages/categorypage.dart';
@@ -152,7 +153,7 @@ class _HomeState extends State<Home> {
                           child: InkWell(
                             onTap: (){
                               Navigator.of(context).push(
-                                  CupertinoPageRoute(builder: (context)=>DetailDestination(destinationId: index, image: images[index],))
+                                  CupertinoPageRoute(builder: (context)=>DetailPackageTrip(packageTripId: index, image: images[index]))
                               );
                             },
                             child: CardWidgets(

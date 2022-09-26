@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CategoryListModel{
+class SearchCardList{
   @required String title;
   @required String image;
-  @required String id;
+  @required String type;
+  @required String location;
+  @required double rating;
 
-  CategoryListModel(this.title, this.image, this.id);
+  SearchCardList(this.title, this.image, this.type, this.location, this.rating);
 }
