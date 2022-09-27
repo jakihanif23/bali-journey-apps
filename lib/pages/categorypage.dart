@@ -5,7 +5,7 @@ import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/widgets/card.dart';
 
 class CategoryPage extends StatefulWidget {
-  final int cateId;
+  final String? cateId;
   const CategoryPage({Key? key, required this.cateId}) : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Category ${widget.cateId}',
+                        '${widget.cateId}',
                         style: GoogleFonts.salsa(
                             fontSize: 36,
                             textStyle: TextStyle(color: Color(0xff136068))
@@ -58,7 +58,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       Container(
                         padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
                         child: Text(
-                          'All Category ${widget.cateId}',
+                          'All ${widget.cateId}',
                           style: GoogleFonts.salsa(
                               fontSize: 24,
                               textStyle: TextStyle(color: Color(0xff136068))
@@ -104,7 +104,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       Container(
                         padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
                         child: Text(
-                          'Recommended Category ${widget.cateId}',
+                          'Recommended ${widget.cateId}',
                           style: GoogleFonts.salsa(
                               fontSize: 24,
                               textStyle: TextStyle(color: Color(0xff136068))

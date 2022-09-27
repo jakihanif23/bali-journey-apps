@@ -30,7 +30,7 @@ class _SearchState extends State<Search> {
     setState(() {
       displayList = searchList
           .where((element) =>
-              element.title!.toLowerCase().contains(value.toLowerCase()))
+              element.title.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -49,17 +49,31 @@ class _SearchState extends State<Search> {
                 width: MediaQuery.of(context).size.width,
                 height: 150,
                 alignment: Alignment.center,
-                child: TextField(
-                  onChanged: (value) => updateList(value),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color(0xffD9F9F8),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none),
-                    hintText: 'eg: Pantai Kuta',
-                    prefixIcon: Icon(Icons.search),
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      child: Text(
+                        'Search Destination',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      onChanged: (value) => updateList(value),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xffD9F9F8),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide.none),
+                        hintText: 'eg: Pantai Kuta',
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(

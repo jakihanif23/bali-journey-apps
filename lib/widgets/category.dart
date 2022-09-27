@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CategoryWidgets extends StatelessWidget {
 
-  final String text;
+  final String? text;
   CategoryWidgets(this.text);
 
   @override
@@ -17,7 +17,7 @@ class CategoryWidgets extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10))
       ),
       child: Text(
-        text,
+        text!,
         style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold),
       ),
     );
