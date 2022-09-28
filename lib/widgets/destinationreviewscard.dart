@@ -42,13 +42,15 @@ class DestinationReviewCard extends StatelessWidget {
                                 'Mamang Kesbor',
                                 style: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold
+                                    fontWeight: FontWeight.bold,
+                                  color: Colors.black
                                 ),
                               ),
                               Text(
                                 'New Delhi',
                                 style: TextStyle(
                                   fontSize: 12,
+                                  color: Colors.black
                                 ),
                               ),
                               Expanded(
@@ -68,7 +70,8 @@ class DestinationReviewCard extends StatelessWidget {
                             '20 Desember 2021',
                             style: TextStyle(
                                 fontSize: 8,
-                                fontStyle: FontStyle.italic
+                                fontStyle: FontStyle.italic,
+                              color: Colors.black
                             ),
                           ),
                         ),
@@ -84,7 +87,8 @@ class DestinationReviewCard extends StatelessWidget {
                 child: Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque cursus ex sed egestas sagittis. Nunc suscipit ultrices lorem id viverra. Nam hendrerit nunc eu vulputate pulvinar. Ut dapibus erat vulputate, viverra nunc sed, tempor nisl. Donec eget mi arcu. Sed vitae euismod velit. Aliquam aliquam ex at risus sagittis, vitae ultricies nulla dapibus. Curabitur cursus velit quis ipsum elementum, vitae gravida ipsum pretium. Vivamus nibh massa, auctor quis quam eu, viverra fermentum nisl. Fusce nec pretium mi, ac porta nunc. Integer lacus turpis, interdum eu semper id, iaculis ut odio. Nullam bibendum pharetra tempus. Proin eu libero nec nisl ultricies fringilla vel id sapien. Suspendisse ultricies sagittis orci euismod pulvinar.',
                   style: TextStyle(
-                      fontSize: 12
+                      fontSize: 12,
+                    color: Colors.black
                   ),
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,

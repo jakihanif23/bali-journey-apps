@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/categorymodels.dart';
+import 'package:wisata_bali/models/listmodels.dart';
 import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/pages/categorypage.dart';
 import 'package:wisata_bali/widgets/card.dart';
@@ -20,6 +21,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  CategoryModel? categoryModel = null;
+
   @override
   Widget build(BuildContext context) {
     List<String> images = ['assets/bg.jpg', 'assets/beach.jpg', 'assets/bg.jpg', 'assets/beach.jpg'];
@@ -28,6 +31,7 @@ class _HomeState extends State<Home> {
       CategoryModel(id: 2, name: 'Hotel'),
       CategoryModel(id: 2, name: 'Gunung')
     ];
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -48,14 +52,14 @@ class _HomeState extends State<Home> {
                               'Find Your',
                               style: GoogleFonts.salsa(
                                   fontSize: 36,
-                                  textStyle: TextStyle(color: Color(0xff136068))
+                                  textStyle: TextStyle(color: isDarkTheme? Color(0xffD9F9F8) : Color(0xff136068))
                               ),
                             ),
                             Text(
                               'Destination',
                               style: GoogleFonts.salsa(
                                   fontSize: 36,
-                                  textStyle: TextStyle(color: Color(0xff136068))
+                                  textStyle: TextStyle(color: isDarkTheme? Color(0xffD9F9F8) : Color(0xff136068))
                               ),
                             )
                           ],
@@ -107,7 +111,7 @@ class _HomeState extends State<Home> {
                     'Recommendation Destination',
                     style: GoogleFonts.salsa(
                         fontSize: 24,
-                        textStyle: TextStyle(color: Color(0xff136068))
+                        textStyle: TextStyle(color: isDarkTheme? Color(0xffD9F9F8) : Color(0xff136068))
                     ),
                   ),
                 ),
@@ -144,7 +148,7 @@ class _HomeState extends State<Home> {
                     'Recommendation Package Trip',
                     style: GoogleFonts.salsa(
                         fontSize: 24,
-                        textStyle: TextStyle(color: Color(0xff136068))
+                        textStyle: TextStyle(color: isDarkTheme? Color(0xffD9F9F8) : Color(0xff136068))
                     ),
                   ),
                 ),

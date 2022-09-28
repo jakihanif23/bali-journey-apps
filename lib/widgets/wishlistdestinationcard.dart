@@ -17,6 +17,7 @@ class WishlistDestinationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -41,7 +42,7 @@ class WishlistDestinationCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                        color: Color(0xff136068),
+                        color: isDarkTheme?Colors.white:Color(0xff136068),
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
@@ -52,13 +53,13 @@ class WishlistDestinationCard extends StatelessWidget {
                       rating: rating,
                       itemBuilder: (contex, index) => Icon(
                         Icons.star,
-                        color: Color(0xff136068),
+                        color: isDarkTheme?Colors.white:Color(0xff136068),
                       ),
                     ),
                   ),
                   Text(
                     place,
-                    style: TextStyle(color: Color(0xff136068), fontSize: 14),
+                    style: TextStyle(color: isDarkTheme?Colors.white: Color(0xff136068), fontSize: 14),
                   )
                 ],
               ),

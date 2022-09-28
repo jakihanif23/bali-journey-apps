@@ -15,6 +15,7 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -32,7 +33,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         '${widget.cateId}',
                         style: GoogleFonts.salsa(
                             fontSize: 36,
-                            textStyle: TextStyle(color: Color(0xff136068))
+                            textStyle: TextStyle(color: isDarkTheme?Colors.white:Color(0xff136068))
                         ),
                       ),
                       InkWell(
@@ -61,7 +62,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           'All ${widget.cateId}',
                           style: GoogleFonts.salsa(
                               fontSize: 24,
-                              textStyle: TextStyle(color: Color(0xff136068))
+                              textStyle: TextStyle(color: isDarkTheme?Colors.white:Color(0xff136068))
                           ),
                         ),
                       ),
@@ -107,7 +108,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           'Recommended ${widget.cateId}',
                           style: GoogleFonts.salsa(
                               fontSize: 24,
-                              textStyle: TextStyle(color: Color(0xff136068))
+                              textStyle: TextStyle(color: isDarkTheme?Colors.white:Color(0xff136068))
                           ),
                         ),
                       ),

@@ -14,7 +14,7 @@ class CategoryModel {
     );
   }
   static Future<CategoryModel> connectToApi(String id) async {
-    String apiUrl = 'http://localhost:3000/home/category' + id;
+    String apiUrl = 'http://10.0.2.2:3000/home/category' + id;
     var apiResult = await http.get(Uri.parse(apiUrl));
     var jsonObject = json.decode(apiResult.body);
     var userData = (jsonObject as Map<String, dynamic>);

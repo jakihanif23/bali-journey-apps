@@ -21,11 +21,12 @@ class DetailDestination extends StatefulWidget {
 class _DetailDestinationState extends State<DetailDestination> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
         body: CustomScrollView(
       slivers: [
         SliverAppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: isDarkTheme?Colors.black87:Colors.white,
           pinned: true,
           expandedHeight: 380,
           leading: InkWell(
@@ -34,7 +35,7 @@ class _DetailDestinationState extends State<DetailDestination> {
             },
             child: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: isDarkTheme?Colors.grey:Colors.black,
             ),
           ),
           flexibleSpace: FlexibleSpaceBar(
@@ -42,7 +43,7 @@ class _DetailDestinationState extends State<DetailDestination> {
               color: Colors.white.withOpacity(0.1),
               child: Text(
                 'Destination ${widget.destinationId}',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: isDarkTheme?Colors.white:Colors.black),
               ),
             ),
             background: Image.asset(

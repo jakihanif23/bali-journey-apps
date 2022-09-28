@@ -10,6 +10,7 @@ class PackageTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Column(
       children: [
         Divider(),
@@ -43,7 +44,7 @@ class PackageTripCard extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: Color(0xff136068)
+                              color: isDarkTheme?Colors.white:Color(0xff136068)
                           ),
                         ),
                       ),
@@ -52,7 +53,7 @@ class PackageTripCard extends StatelessWidget {
                           rating: rating,
                           itemCount: 5,
                           itemSize: 23,
-                          itemBuilder: (context, index)=>Icon(Icons.star, color: Color(0xff136068),),
+                          itemBuilder: (context, index)=>Icon(Icons.star, color: isDarkTheme?Colors.white:Color(0xff136068),),
                         )
                       ),
                       Container(
@@ -60,7 +61,7 @@ class PackageTripCard extends StatelessWidget {
                         child: Text(
                           'IDR $price /pax',
                           style: TextStyle(
-                              color: Color(0xff136068),
+                              color: isDarkTheme?Colors.white:Color(0xff136068),
                               fontSize: 14,
                               fontWeight: FontWeight.w100
                           ),

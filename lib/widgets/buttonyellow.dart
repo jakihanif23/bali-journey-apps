@@ -18,7 +18,8 @@ class ButtonYellow extends StatelessWidget {
       child: Text(
         title,
         style: GoogleFonts.salsa(
-            fontSize: 12
+            fontSize: 12,
+          color: Colors.black
         ),
       ),
     );

@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: CustomScaffold(
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
               unselectedFontSize: 10,
               unselectedItemColor: Colors.grey,
               currentIndex: current,
-              backgroundColor: Color(0xfff5f4f4),
+              backgroundColor: isDarkTheme?Colors.black26:Color(0xfff5f4f4),
               items: [
                 BottomNavigationBarItem(
                     activeIcon: Icon(Icons.home_filled),

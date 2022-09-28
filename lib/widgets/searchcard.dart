@@ -19,6 +19,7 @@ class SearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       margin: EdgeInsets.all(15),
       height: 133,
@@ -46,7 +47,7 @@ class SearchCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff136068),
+                      color: isDarkTheme?Colors.white:Color(0xff136068),
                     ),
                   ),
                   Container(
@@ -56,7 +57,7 @@ class SearchCard extends StatelessWidget {
                     itemSize: 15,
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
-                      color: Color(0xff136068),
+                      color: isDarkTheme?Colors.white:Color(0xff136068),
                     ),
                   )),
                   Text(

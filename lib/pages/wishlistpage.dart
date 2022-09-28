@@ -18,6 +18,7 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     List<double> ratingnilai = [1.0, 2.0, 3.0, 4.0, 5.0];
     TabController _tabController = TabController(length: 2, vsync: this);
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       height: double.infinity,
       padding: EdgeInsets.all(10),
@@ -36,7 +37,7 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                         'Wishlist',
                         style: GoogleFonts.salsa(
                             fontSize: 36,
-                            textStyle: TextStyle(color: Color(0xff136068))),
+                            textStyle: TextStyle(color: isDarkTheme? Colors.white: Color(0xff136068))),
                       ),
                     ),
                     InkWell(
@@ -60,12 +61,12 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                   alignment: Alignment.centerLeft,
                   child: TabBar(
                     controller: _tabController,
-                    labelColor: Colors.black,
+                    labelColor: isDarkTheme?Colors.white:Colors.black,
                     isScrollable: true,
                     labelPadding: EdgeInsets.only(left: 20, right: 20),
                     unselectedLabelColor: Colors.grey,
                     indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: Colors.black,
+                    indicatorColor: isDarkTheme?Colors.white:Colors.black,
                     tabs: [
                       Tab(
                         text: 'Destination',

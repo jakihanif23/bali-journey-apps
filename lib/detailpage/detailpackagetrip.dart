@@ -20,6 +20,7 @@ class DetailPackageTrip extends StatefulWidget {
 class _DetailPackageTripState extends State<DetailPackageTrip> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: Stack(
         children: [
@@ -76,8 +77,8 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 border: Border(
-                                    top: BorderSide(color: Colors.black),
-                                    bottom: BorderSide(color: Colors.black)
+                                    top: BorderSide(color: isDarkTheme?Colors.white:Colors.black),
+                                    bottom: BorderSide(color: isDarkTheme?Colors.white:Colors.black)
                                 )
                             ),
                             child: Row(
@@ -90,13 +91,13 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                     style: GoogleFonts.lato(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,
-                                        color: Color(0xff136068)
+                                        color: isDarkTheme ? Colors.white :Color(0xff136068)
                                     ),
                                   ),
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                  child: SvgPicture.asset('assets/arrow_top_right.svg', color: Color(0xff136068),),
+                                  child: SvgPicture.asset('assets/arrow_top_right.svg', color: isDarkTheme?Colors.white:Color(0xff136068),),
                                 )
                               ],
                             )
@@ -110,8 +111,8 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 border: Border(
-                                    top: BorderSide(color: Colors.black),
-                                    bottom: BorderSide(color: Colors.black)
+                                    top: BorderSide(color: isDarkTheme?Colors.white:Colors.black),
+                                    bottom: BorderSide(color: isDarkTheme?Colors.white:Colors.black)
                                 )
                             ),
                             child: Row(
@@ -124,13 +125,13 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                     style: GoogleFonts.lato(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,
-                                        color: Color(0xff136068)
+                                        color: isDarkTheme?Colors.white:Color(0xff136068)
                                     ),
                                   ),
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                  child: SvgPicture.asset('assets/arrow_top_right.svg', color: Color(0xff136068),),
+                                  child: SvgPicture.asset('assets/arrow_top_right.svg', color: isDarkTheme?Colors.white:Color(0xff136068),),
                                 )
                               ],
                             )

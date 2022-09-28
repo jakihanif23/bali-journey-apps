@@ -17,6 +17,8 @@ class PackageTrip extends StatefulWidget {
 class _PackageTripState extends State<PackageTrip> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     List<double> ratingnilai = [1.0, 2.0, 3.0, 4.0];
     return Scaffold(
       body: SingleChildScrollView(
@@ -38,7 +40,10 @@ class _PackageTripState extends State<PackageTrip> {
                           'Package Trip',
                           style: GoogleFonts.salsa(
                               fontSize: 36,
-                              textStyle: TextStyle(color: Color(0xff136068))),
+                              textStyle: TextStyle(
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : Color(0xff136068))),
                         ),
                       ],
                     ),
@@ -51,8 +56,8 @@ class _PackageTripState extends State<PackageTrip> {
               decoration: BoxDecoration(
                   border: Border(
                       top: BorderSide(
-                width: 2,
-              ))),
+                          width: 2,
+                          color: isDarkTheme ? Colors.white : Colors.black))),
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.64,

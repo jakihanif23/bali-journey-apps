@@ -17,7 +17,8 @@ class GiveReviewButton extends StatelessWidget {
       child: Text(
         'Give Review',
         style: GoogleFonts.salsa(
-            fontSize: 16
+            fontSize: 16,
+          color: Colors.black
         ),
       ),
     );

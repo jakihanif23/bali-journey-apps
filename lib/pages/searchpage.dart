@@ -37,6 +37,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       child: Scaffold(
         body: Container(
@@ -65,7 +66,7 @@ class _SearchState extends State<Search> {
                       onChanged: (value) => updateList(value),
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Color(0xffD9F9F8),
+                        fillColor: isDarkTheme?Colors.black26:Color(0xffD9F9F8),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                             borderSide: BorderSide.none),
