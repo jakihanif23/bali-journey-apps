@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class CardWidgets extends StatelessWidget {
   final String image;
-  CardWidgets(this.image);
+  const CardWidgets(this.image);
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +13,46 @@ class CardWidgets extends StatelessWidget {
       height: 300,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: Color(0xffD9D9D9),
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: AssetImage(image),
-          fit: BoxFit.cover
-        )
+          color: const Color(0xffD9D9D9),
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+              image: NetworkImage('http://10.0.2.2:3000/$image'),
+              fit: BoxFit.cover)),
+      child: Stack(
+        children: [
+          Positioned(
+              bottom: 15,
+              left: 13,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.8),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                  child: Container(
+                    height: 30,
+                    padding: const EdgeInsets.only(left: 5, right: 8),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.fmd_good,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Location',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.grey,
+                              fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ))
+        ],
       ),
     );
   }

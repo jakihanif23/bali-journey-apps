@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wisata_bali/apiservices/listapi.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
+import 'package:wisata_bali/models/list_package_trip_model.dart';
 import 'package:wisata_bali/widgets/buttonyellow.dart';
-import 'package:wisata_bali/widgets/card.dart';
-import 'package:wisata_bali/widgets/category.dart';
 import 'package:wisata_bali/widgets/packagetripcard.dart';
 
 class PackageTrip extends StatefulWidget {
@@ -15,6 +15,23 @@ class PackageTrip extends StatefulWidget {
 }
 
 class _PackageTripState extends State<PackageTrip> {
+  List<ListPackageTripModel>? listAllPackageTrips;
+  var isLoaded = false;
+  getAllData() async {
+    listAllPackageTrips = await ListApi().listAllPackageTrip();
+    if (listAllPackageTrips != null) {
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllData();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
@@ -32,7 +49,7 @@ class _PackageTripState extends State<PackageTrip> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -43,7 +60,7 @@ class _PackageTripState extends State<PackageTrip> {
                               textStyle: TextStyle(
                                   color: isDarkTheme
                                       ? Colors.white
-                                      : Color(0xff136068))),
+                                      : const Color(0xff136068))),
                         ),
                       ],
                     ),
@@ -52,40 +69,49 @@ class _PackageTripState extends State<PackageTrip> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 40),
+              margin: const EdgeInsets.only(top: 40),
               decoration: BoxDecoration(
                   border: Border(
                       top: BorderSide(
                           width: 2,
                           color: isDarkTheme ? Colors.white : Colors.black))),
             ),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.64,
               child: ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.all(10.0),
-                itemCount: ratingnilai.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (_) => DetailPackageTrip(
-                                packageTripId: index,
-                                image: 'assets/beach.jpg',
-                              )));
-                    },
-                    child: PackageTripCard('Title $index', 'assets/beach.jpg',
-                        'Price $index', ratingnilai[index]),
-                  );
-                },
-              ),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(10.0),
+                  itemCount: listAllPackageTrips?.length,
+                  itemBuilder: (context, index) {
+                    if (listAllPackageTrips == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(CupertinoPageRoute(
+                              builder: (_) => DetailPackageTrip(
+                                    packageTripId:
+                                        listAllPackageTrips![index].id,
+                                  )));
+                        },
+                        child: PackageTripCard(
+                            listAllPackageTrips![index].name,
+                            listAllPackageTrips![index].images[0].img,
+                            listAllPackageTrips![index].price,
+                            double.parse(
+                                listAllPackageTrips![index].rating.toString())),
+                      );
+                    }
+                  }),
             ),
             Container(
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 15),
                 height: 70,
                 child: Column(
-                  children: [ButtonYellow(title: 'Filter')],
+                  children: const [ButtonYellow(title: 'Filter')],
                 )),
           ],
         )),

@@ -17,37 +17,41 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     List<double> ratingnilai = [1.0, 2.0, 3.0, 4.0, 5.0];
-    TabController _tabController = TabController(length: 2, vsync: this);
-    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    TabController tabController = TabController(length: 2, vsync: this);
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       height: double.infinity,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: ListView(
         children: [
           Column(
             children: [
               Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 20),
                       child: Text(
                         'Wishlist',
                         style: GoogleFonts.salsa(
                             fontSize: 36,
-                            textStyle: TextStyle(color: isDarkTheme? Colors.white: Color(0xff136068))),
+                            textStyle: TextStyle(
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068))),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                            CupertinoPageRoute(builder: (context) => Account()));
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) => const Account()));
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 10, 20, 0),
-                        child: CircleAvatar(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
+                        child: const CircleAvatar(
                           radius: 30,
                           backgroundImage: AssetImage('assets/man.jpg'),
                         ),
@@ -60,14 +64,14 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: TabBar(
-                    controller: _tabController,
-                    labelColor: isDarkTheme?Colors.white:Colors.black,
+                    controller: tabController,
+                    labelColor: isDarkTheme ? Colors.white : Colors.black,
                     isScrollable: true,
-                    labelPadding: EdgeInsets.only(left: 20, right: 20),
+                    labelPadding: const EdgeInsets.only(left: 20, right: 20),
                     unselectedLabelColor: Colors.grey,
                     indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: isDarkTheme?Colors.white:Colors.black,
-                    tabs: [
+                    indicatorColor: isDarkTheme ? Colors.white : Colors.black,
+                    tabs: const [
                       Tab(
                         text: 'Destination',
                       ),
@@ -80,19 +84,19 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
               ),
               Container(
                 width: double.maxFinite,
-                height: MediaQuery.of(context).size.height *0.7,
-                padding: EdgeInsets.only(top: 20),
+                height: MediaQuery.of(context).size.height * 0.7,
+                padding: const EdgeInsets.only(top: 20),
                 child: TabBarView(
-                  controller: _tabController,
+                  controller: tabController,
                   children: [
                     ListView.builder(
                       itemCount: ratingnilai.length,
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: (){
-                            Navigator.of(context).push(
-                              CupertinoPageRoute(builder: (context)=>DetailDestination(destinationId: index, image: 'assets/bg.jpg'))
-                            );
+                          onTap: () {
+                            Navigator.of(context).push(CupertinoPageRoute(
+                                builder: (context) =>
+                                    DetailDestination(destinationId: index)));
                           },
                           child: WishlistDestinationCard(
                               image: 'assets/bg.jpg',
@@ -104,7 +108,7 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                     ),
                     ListView.builder(
                       itemCount: ratingnilai.length,
-                      itemBuilder: (context, index){
+                      itemBuilder: (context, index) {
                         return InkWell(
                           child: WishlistPackageTripCard(
                             title: 'Title $index',

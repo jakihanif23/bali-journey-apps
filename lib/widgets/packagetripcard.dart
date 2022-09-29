@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 
 class PackageTripCard extends StatelessWidget {
   final String title;
   final String image;
   final String price;
   final double rating;
-  PackageTripCard(this.title, this.image, this.price, this.rating);
+  const PackageTripCard(this.title, this.image, this.price, this.rating);
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final currencyformatter =
+        NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
     return Column(
       children: [
-        Divider(),
-        Container(
+        const Divider(),
+        SizedBox(
           height: 133,
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -25,15 +29,13 @@ class PackageTripCard extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(image),
-                        fit: BoxFit.cover
-                    )
-                ),
+                        image: NetworkImage('http://10.0.2.2:3000/$image'),
+                        fit: BoxFit.cover)),
               ),
               Expanded(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -44,27 +46,33 @@ class PackageTripCard extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: isDarkTheme?Colors.white:Color(0xff136068)
-                          ),
+                              color: isDarkTheme
+                                  ? Colors.white
+                                  : const Color(0xff136068)),
                         ),
                       ),
                       Container(
-                        child: RatingBarIndicator(
-                          rating: rating,
-                          itemCount: 5,
-                          itemSize: 23,
-                          itemBuilder: (context, index)=>Icon(Icons.star, color: isDarkTheme?Colors.white:Color(0xff136068),),
-                        )
-                      ),
+                          child: RatingBarIndicator(
+                        rating: rating,
+                        itemCount: 5,
+                        itemSize: 23,
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star,
+                          color: isDarkTheme
+                              ? Colors.white
+                              : const Color(0xff136068),
+                        ),
+                      )),
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'IDR $price /pax',
+                          '${currencyformatter.format(int.parse(price))}/pax',
                           style: TextStyle(
-                              color: isDarkTheme?Colors.white:Color(0xff136068),
+                              color: isDarkTheme
+                                  ? Colors.white
+                                  : const Color(0xff136068),
                               fontSize: 14,
-                              fontWeight: FontWeight.w100
-                          ),
+                              fontWeight: FontWeight.w100),
                         ),
                       )
                     ],
