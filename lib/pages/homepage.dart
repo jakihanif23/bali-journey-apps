@@ -41,12 +41,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> images = [
-      'assets/bg.jpg',
-      'assets/beach.jpg',
-      'assets/bg.jpg',
-      'assets/beach.jpg'
-    ];
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(

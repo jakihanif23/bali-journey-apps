@@ -87,23 +87,21 @@ class _PackageTripState extends State<PackageTrip> {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (_) => DetailPackageTrip(
-                                    packageTripId:
-                                        listAllPackageTrips![index].id,
-                                  )));
-                        },
-                        child: PackageTripCard(
-                            listAllPackageTrips![index].name,
-                            listAllPackageTrips![index].images[0].img,
-                            listAllPackageTrips![index].price,
-                            double.parse(
-                                listAllPackageTrips![index].rating.toString())),
-                      );
                     }
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (_) => DetailPackageTrip(
+                                  packageTripId: listAllPackageTrips![index].id,
+                                )));
+                      },
+                      child: PackageTripCard(
+                          listAllPackageTrips![index].name,
+                          listAllPackageTrips![index].images[0].img,
+                          listAllPackageTrips![index].price,
+                          double.parse(
+                              listAllPackageTrips![index].rating.toString())),
+                    );
                   }),
             ),
             Container(

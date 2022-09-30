@@ -4,13 +4,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class SearchCard extends StatelessWidget {
   final String title;
   final double rating;
-  final String type;
+  final String category;
   final String location;
   final String image;
 
   const SearchCard(
       {Key? key,
-      required this.type,
+      required this.category,
       required this.title,
       required this.rating,
       required this.location,
@@ -19,9 +19,10 @@ class SearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       height: 133,
       width: 370,
       child: Row(
@@ -31,13 +32,14 @@ class SearchCard extends StatelessWidget {
             child: Container(
               width: 160,
               decoration: BoxDecoration(
-                  image:
-                      DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+                  image: DecorationImage(
+                      image: NetworkImage('http://10.0.2.2:3000/$image'),
+                      fit: BoxFit.cover)),
             ),
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +49,8 @@ class SearchCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: isDarkTheme?Colors.white:Color(0xff136068),
+                      color:
+                          isDarkTheme ? Colors.white : const Color(0xff136068),
                     ),
                   ),
                   Container(
@@ -57,16 +60,17 @@ class SearchCard extends StatelessWidget {
                     itemSize: 15,
                     itemBuilder: (context, index) => Icon(
                       Icons.star,
-                      color: isDarkTheme?Colors.white:Color(0xff136068),
+                      color:
+                          isDarkTheme ? Colors.white : const Color(0xff136068),
                     ),
                   )),
                   Text(
-                    type,
-                    style: TextStyle(fontSize: 14),
+                    category,
+                    style: const TextStyle(fontSize: 14),
                   ),
                   Text(
                     location,
-                    style: TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14),
                   )
                 ],
               ),

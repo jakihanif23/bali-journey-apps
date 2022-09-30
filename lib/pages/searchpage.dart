@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:wisata_bali/models/listmodels.dart';
+import 'package:wisata_bali/models/list_destination_model.dart';
 import 'package:wisata_bali/widgets/searchcard.dart';
+import 'package:http/http.dart' as http;
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -11,42 +13,64 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  static List<SearchCardList> searchList = [
-    SearchCardList('Bali', 'assets/bg.jpg', 'Snorkling, Surfing, Diving',
-        'Bali Barat', 3.0),
-    SearchCardList('Pantai Kuta', 'assets/beach.jpg',
-        'Snorkling, Surfing, Diving', 'Bali Timur', 2.1),
-    SearchCardList(
-        'Gunung Aja', 'assets/bg.jpg', 'Hiking, Nyantai', 'Bali Ujung', 3.4),
-    SearchCardList(
-        'Pegunungan', 'assets/beach.jpg', 'Jalan Jalan', 'Bali Barat', 4.4),
-    SearchCardList('Next Trip', 'assets/bg.jpg', 'Kesana aja sih maunya',
-        'Bali Barat', 4.1),
-  ];
+  List<ListDestinationModel> listData = [];
+  List<ListDestinationModel> listData2 = [];
+  String url = 'http://10.0.2.2:3000/home/allDestinations';
+  static List<ListDestinationModel> parseAgents(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed
+        .map<ListDestinationModel>(
+            (json) => ListDestinationModel.fromJson(json))
+        .toList();
+  }
 
-  List<SearchCardList> displayList = List.from(searchList);
+  Future<List<ListDestinationModel>> getAllLists() async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        List<ListDestinationModel> list = parseAgents(response.body);
+        return list;
+      } else {
+        throw Exception('Error');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  void initState() {
+    getAllLists().then((value) => {
+          setState(() {
+            listData = value;
+            listData2 = listData;
+          })
+        });
+    super.initState();
+  }
 
   void updateList(String value) {
     setState(() {
-      displayList = searchList
+      listData2 = listData
           .where((element) =>
-              element.title.toLowerCase().contains(value.toLowerCase()))
+              (element.name.toLowerCase().contains(value.toLowerCase())))
           .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       child: Scaffold(
-        body: Container(
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 width: MediaQuery.of(context).size.width,
                 height: 150,
                 alignment: Alignment.center,
@@ -54,24 +78,24 @@ class _SearchState extends State<Search> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      child: Text(
+                      child: const Text(
                         'Search Destination',
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
                     TextField(
                       onChanged: (value) => updateList(value),
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: isDarkTheme?Colors.black26:Color(0xffD9F9F8),
+                        fillColor: isDarkTheme
+                            ? Colors.black26
+                            : const Color(0xffD9F9F8),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.0),
                             borderSide: BorderSide.none),
                         hintText: 'eg: Pantai Kuta',
-                        prefixIcon: Icon(Icons.search),
+                        prefixIcon: const Icon(Icons.search),
                       ),
                     ),
                   ],
@@ -79,27 +103,25 @@ class _SearchState extends State<Search> {
               ),
               Expanded(
                 child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(top: BorderSide(width: 2))),
-                    child: displayList.length == 0
-                        ? Center(
+                    child: listData2.isEmpty
+                        ? const Center(
                             child: Text(
                               'Result not Found',
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
+                                  fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                           )
                         : ListView.builder(
-                            itemCount: displayList.length,
+                            itemCount: listData2.length,
                             itemBuilder: (context, index) {
                               return SearchCard(
-                                type: displayList[index].type,
-                                title: displayList[index].title,
-                                rating: displayList[index].rating,
-                                location: displayList[index].location,
-                                image: displayList[index].image,
+                                category: listData2[index].category.name,
+                                title: listData2[index].name,
+                                rating: listData2[index].rating.toDouble(),
+                                location: listData2[index].address,
+                                image: listData2[index].images[0].img,
                               );
                             },
                           )),
