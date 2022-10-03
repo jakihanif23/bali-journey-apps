@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class CardWidgets extends StatelessWidget {
   final String image;
-  const CardWidgets(this.image);
+  final String address;
+  const CardWidgets(this.image, this.address);
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +33,17 @@ class CardWidgets extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 5, right: 8),
                     alignment: Alignment.centerLeft,
                     child: Row(
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.fmd_good,
                           color: Colors.grey,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          'Location',
-                          style: TextStyle(
+                          address,
+                          style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.grey,
                               fontSize: 13),

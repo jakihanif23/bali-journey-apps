@@ -8,6 +8,7 @@ import 'package:wisata_bali/login_regis/backgound.dart';
 import 'package:wisata_bali/login_regis/registerpage.dart';
 import 'package:http/http.dart' as http;
 import 'package:wisata_bali/utils/constant.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 
 import '../mainpage.dart';
 
@@ -36,25 +37,48 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       loginArr = json.decode(response.body);
       setJwt(loginArr['accessToken']);
-
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Login Successful'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          CupertinoPageRoute(builder: (builder) => HomePage()),
-                          (Route<dynamic> route) => false);
-                    },
-                    child: const Text('OK'))
-              ],
-            );
-          });
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Login Successful'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (builder) => HomePage()),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
     } else {
-      print(response.body);
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Login Failed'),
+            content: const Text('Password or Email not Correct'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _emailController.text = '';
+                    _passwordController.text = '';
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
     }
   }
 

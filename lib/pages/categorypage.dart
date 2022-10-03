@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/apiservices/listapi.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
 import 'package:wisata_bali/models/list_destination_model.dart';
-import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/widgets/card.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -63,21 +62,6 @@ class _CategoryPageState extends State<CategoryPage> {
                                     ? Colors.white
                                     : const Color(0xff136068))),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => const Account()));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: const CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage('assets/man.jpg'),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -131,7 +115,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                           child: CardWidgets(
                                               listDestinations![index]
                                                   .images[0]
-                                                  .img),
+                                                  .img,
+                                              listDestinations![index].address),
                                         ),
                                       );
                               },
@@ -184,7 +169,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                                   )));
                                     },
                                     child: CardWidgets(
-                                        listDestinations![index].images[0].img),
+                                        listDestinations![index].images[0].img,
+                                        listDestinations![index].address),
                                   ),
                                 );
                               },

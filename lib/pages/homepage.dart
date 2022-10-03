@@ -11,6 +11,7 @@ import 'package:wisata_bali/models/category.dart';
 import 'package:wisata_bali/models/homemodel.dart';
 import 'package:wisata_bali/models/profile_model.dart';
 import 'package:wisata_bali/pages/accountpage.dart';
+import 'package:wisata_bali/pages/accountpageloggedin.dart';
 import 'package:wisata_bali/pages/categorypage.dart';
 import 'package:wisata_bali/widgets/card.dart';
 import 'package:wisata_bali/widgets/category.dart';
@@ -30,22 +31,23 @@ class _HomeState extends State<Home> {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString('jwt') == null) {
       print('user null');
+    } else {
+      setState(() {
+        loginChecker = true;
+      });
+      String data = prefs.getString('jwt') ?? '';
+      futureUser = UserApi().getProfileData(data);
+      // Map<String, dynamic> payload = Jwt.parseJwt(data);
+      // // print(prefs.getString('jwt'));
+      // var id = payload['id'];
+      // const String apiUrl = 'http://10.0.2.2:3000/users/profile';
+      // final response = await http.get(Uri.parse(apiUrl), headers: {
+      //   'access_token': '${prefs.getString('jwt')}',
+      // });
+      // print(response.body);
+      // print(payload);
+      print(loginChecker);
     }
-    setState(() {
-      loginChecker = true;
-    });
-    String data = prefs.getString('jwt') ?? '';
-    futureUser = UserApi().getProfileData(data);
-    // Map<String, dynamic> payload = Jwt.parseJwt(data);
-    // // print(prefs.getString('jwt'));
-    // var id = payload['id'];
-    // const String apiUrl = 'http://10.0.2.2:3000/users/profile';
-    // final response = await http.get(Uri.parse(apiUrl), headers: {
-    //   'access_token': '${prefs.getString('jwt')}',
-    // });
-    // print(response.body);
-    // print(payload);
-    print(loginChecker);
   }
 
   @override
@@ -116,7 +118,8 @@ class _HomeState extends State<Home> {
                               return InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(CupertinoPageRoute(
-                                      builder: (context) => const Account()));
+                                      builder: (context) =>
+                                          const AccountPageLoggedIn()));
                                 },
                                 child: Container(
                                   padding:
@@ -226,7 +229,8 @@ class _HomeState extends State<Home> {
                                           )));
                                 },
                                 child: CardWidgets(
-                                    destination[index].images[0].img),
+                                    destination[index].images[0].img,
+                                    destination[index].address),
                               ),
                             );
                           },
@@ -274,7 +278,8 @@ class _HomeState extends State<Home> {
                                           packageTripId: package[index].id,
                                         )));
                               },
-                              child: CardWidgets(package[index].images[0].img),
+                              child: CardWidgets(package[index].images[0].img,
+                                  package[index].name),
                             ),
                           );
                         },
