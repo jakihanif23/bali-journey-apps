@@ -16,14 +16,9 @@ class PackageTrip extends StatefulWidget {
 
 class _PackageTripState extends State<PackageTrip> {
   List<ListPackageTripModel>? listAllPackageTrips;
-  var isLoaded = false;
+
   getAllData() async {
     listAllPackageTrips = await ListApi().listAllPackageTrip();
-    if (listAllPackageTrips != null) {
-      setState(() {
-        isLoaded = true;
-      });
-    }
   }
 
   @override

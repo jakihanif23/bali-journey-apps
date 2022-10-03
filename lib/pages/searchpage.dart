@@ -62,72 +62,70 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    return Container(
-      child: Scaffold(
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                width: MediaQuery.of(context).size.width,
-                height: 150,
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      child: const Text(
-                        'Search Destination',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
+    return Scaffold(
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              width: MediaQuery.of(context).size.width,
+              height: 150,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: const Text(
+                      'Search Destination',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    TextField(
-                      onChanged: (value) => updateList(value),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: isDarkTheme
-                            ? Colors.black26
-                            : const Color(0xffD9F9F8),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide.none),
-                        hintText: 'eg: Pantai Kuta',
-                        prefixIcon: const Icon(Icons.search),
-                      ),
+                  ),
+                  TextField(
+                    onChanged: (value) => updateList(value),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: isDarkTheme
+                          ? Colors.black26
+                          : const Color(0xffD9F9F8),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide.none),
+                      hintText: 'eg: Pantai Kuta',
+                      prefixIcon: const Icon(Icons.search),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Container(
-                    decoration: const BoxDecoration(
-                        border: Border(top: BorderSide(width: 2))),
-                    child: listData2.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'Result not Found',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: listData2.length,
-                            itemBuilder: (context, index) {
-                              return SearchCard(
-                                category: listData2[index].category.name,
-                                title: listData2[index].name,
-                                rating: listData2[index].rating.toDouble(),
-                                location: listData2[index].address,
-                                image: listData2[index].images[0].img,
-                              );
-                            },
-                          )),
-              )
-            ],
-          ),
+            ),
+            Expanded(
+              child: Container(
+                  decoration: const BoxDecoration(
+                      border: Border(top: BorderSide(width: 2))),
+                  child: listData2.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Result not Found',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: listData2.length,
+                          itemBuilder: (context, index) {
+                            return SearchCard(
+                              category: listData2[index].category.name,
+                              title: listData2[index].name,
+                              rating: listData2[index].rating.toDouble(),
+                              location: listData2[index].address,
+                              image: listData2[index].images[0].img,
+                            );
+                          },
+                        )),
+            )
+          ],
         ),
       ),
     );

@@ -115,7 +115,8 @@ class _HomeState extends State<Home> {
                               context,
                               CupertinoPageRoute(
                                   builder: (context) => CategoryPage(
-                                      cateId: categories![index].name)));
+                                      title: categories![index].name,
+                                      cateId: categories![index].id)));
                         },
                         child: CategoryWidgets(categories![index].name),
                       ),
