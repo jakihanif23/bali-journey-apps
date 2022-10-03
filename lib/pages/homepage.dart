@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/categoryapi.dart';
 import 'package:wisata_bali/apiservices/homeapi.dart';
+import 'package:wisata_bali/apiservices/userapi.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/category.dart';
 import 'package:wisata_bali/models/homemodel.dart';
+import 'package:wisata_bali/models/profile_model.dart';
 import 'package:wisata_bali/pages/accountpage.dart';
 import 'package:wisata_bali/pages/categorypage.dart';
 import 'package:wisata_bali/widgets/card.dart';
@@ -21,10 +24,34 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late Future<HomeModel> futureHome;
+  late Future<UserModel> futureUser;
+  var loginChecker = false;
+  checkLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('jwt') == null) {
+      print('user null');
+    }
+    setState(() {
+      loginChecker = true;
+    });
+    String data = prefs.getString('jwt') ?? '';
+    futureUser = UserApi().getProfileData(data);
+    // Map<String, dynamic> payload = Jwt.parseJwt(data);
+    // // print(prefs.getString('jwt'));
+    // var id = payload['id'];
+    // const String apiUrl = 'http://10.0.2.2:3000/users/profile';
+    // final response = await http.get(Uri.parse(apiUrl), headers: {
+    //   'access_token': '${prefs.getString('jwt')}',
+    // });
+    // print(response.body);
+    // print(payload);
+    print(loginChecker);
+  }
 
   @override
   void initState() {
     super.initState();
+    checkLogin();
     getData();
     futureHome = HomeApi().getHomeApi();
   }
@@ -81,19 +108,55 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (context) => const Account()));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                      child: const CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage('assets/man.jpg'),
-                      ),
-                    ),
-                  )
+                  loginChecker
+                      ? FutureBuilder<UserModel>(
+                          future: futureUser,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(CupertinoPageRoute(
+                                      builder: (context) => const Account()));
+                                },
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(
+                                        'http://10.0.2.2:3000/${snapshot.data!.img}'),
+                                  ),
+                                ),
+                              );
+                            }
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(CupertinoPageRoute(
+                                    builder: (context) => const Account()));
+                              },
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                                child: const CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage('assets/man.jpg'),
+                                ),
+                              ),
+                            );
+                          })
+                      : InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(CupertinoPageRoute(
+                                builder: (context) => const Account()));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                            child: const CircleAvatar(
+                              radius: 30,
+                              backgroundImage: AssetImage('assets/man.jpg'),
+                            ),
+                          ),
+                        )
                 ],
               ),
             ),

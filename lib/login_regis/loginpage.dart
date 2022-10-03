@@ -1,11 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/login_regis/backgound.dart';
 import 'package:wisata_bali/login_regis/registerpage.dart';
 import 'package:http/http.dart' as http;
+import 'package:wisata_bali/utils/constant.dart';
+
+import '../mainpage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -31,7 +35,24 @@ class _LoginPageState extends State<LoginPage> {
         body: {'email': email, 'password': password});
     if (response.statusCode == 200) {
       loginArr = json.decode(response.body);
-      print(loginArr['accessToken']);
+      setJwt(loginArr['accessToken']);
+
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Login Successful'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          CupertinoPageRoute(builder: (builder) => HomePage()),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: const Text('OK'))
+              ],
+            );
+          });
     } else {
       print(response.body);
     }
