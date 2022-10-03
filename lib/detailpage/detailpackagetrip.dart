@@ -106,25 +106,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return snapshot.data!.destinations.isEmpty
-                                        ? const SizedBox(
-                                            height: 200,
-                                            child: Center(
-                                                child: Text('No Destination')),
-                                          )
-                                        : const SizedBox(
-                                            height: 400,
-                                            child: Center(
-                                              child:
-                                                  Text('ini Trip Destination'),
-                                            ),
-                                          );
-                                  });
-                            },
+                            onTap: () {},
                             child: Container(
                                 height: 90,
                                 width: double.infinity,
@@ -176,10 +158,50 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                               showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
-                                    return const SizedBox(
+                                    return SizedBox(
                                       height: 400,
-                                      child: Center(
-                                        child: Text('ini Details'),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 20, 0, 0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Details Trip',
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: const [
+                                                Text('Pickup Point'),
+                                                Text(' • Ngurah Rai Airport'),
+                                                Text(' • 11.30 WITA')
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: const [
+                                                Text('Include'),
+                                                Text(
+                                                    ' • Breakfast, Lunch, Dinner'),
+                                                Text(' • Hotel'),
+                                                Text(' • Photographer'),
+                                                Text(' • Videographer'),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   });
