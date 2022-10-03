@@ -16,9 +16,12 @@ class PackageTrip extends StatefulWidget {
 
 class _PackageTripState extends State<PackageTrip> {
   List<ListPackageTripModel>? listAllPackageTrips;
-
+  var isLoaded = false;
   getAllData() async {
     listAllPackageTrips = await ListApi().listAllPackageTrip();
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   @override
@@ -31,7 +34,6 @@ class _PackageTripState extends State<PackageTrip> {
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
-    List<double> ratingnilai = [1.0, 2.0, 3.0, 4.0];
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -73,31 +75,33 @@ class _PackageTripState extends State<PackageTrip> {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.64,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(10.0),
-                  itemCount: listAllPackageTrips?.length,
-                  itemBuilder: (context, index) {
-                    if (listAllPackageTrips == null) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+              child: Visibility(
+                visible: isLoaded,
+                replacement: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(10.0),
+                    itemCount: listAllPackageTrips?.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(CupertinoPageRoute(
+                              builder: (_) => DetailPackageTrip(
+                                    packageTripId:
+                                        listAllPackageTrips![index].id,
+                                  )));
+                        },
+                        child: PackageTripCard(
+                            listAllPackageTrips![index].name,
+                            listAllPackageTrips![index].images[0].img,
+                            listAllPackageTrips![index].price,
+                            double.parse(
+                                listAllPackageTrips![index].rating.toString())),
                       );
-                    }
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (_) => DetailPackageTrip(
-                                  packageTripId: listAllPackageTrips![index].id,
-                                )));
-                      },
-                      child: PackageTripCard(
-                          listAllPackageTrips![index].name,
-                          listAllPackageTrips![index].images[0].img,
-                          listAllPackageTrips![index].price,
-                          double.parse(
-                              listAllPackageTrips![index].rating.toString())),
-                    );
-                  }),
+                    }),
+              ),
             ),
             Container(
                 width: MediaQuery.of(context).size.width,

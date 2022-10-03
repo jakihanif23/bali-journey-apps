@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late Future<HomeModel> futureHome;
+
   @override
   void initState() {
     super.initState();

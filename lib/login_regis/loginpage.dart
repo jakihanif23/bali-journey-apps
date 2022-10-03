@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wisata_bali/apiservices/homeapi.dart';
 import 'package:wisata_bali/login_regis/backgound.dart';
 import 'package:wisata_bali/login_regis/registerpage.dart';
 import 'package:http/http.dart' as http;
@@ -27,19 +26,19 @@ class _LoginPageState extends State<LoginPage> {
 
   loginUser(String email, String password) async {
     const String apiUrl = 'http://10.0.2.2:3000/home';
+    var loginArr;
     var response = await http.post(Uri.parse('$apiUrl/login'),
         body: {'email': email, 'password': password});
     if (response.statusCode == 200) {
-      var loginArr = json.decode(response.body);
+      loginArr = json.decode(response.body);
       print(loginArr['accessToken']);
     } else {
-      print('Error Login Encoured');
+      print(response.body);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    HomeApi homeApi = HomeApi();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
