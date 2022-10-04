@@ -14,7 +14,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> pages = [Home(), Wishlist(), PackageTrip(), Search(), CartPage()];
+  List<Widget> pages = [
+    const Home(),
+    const Wishlist(),
+    const PackageTrip(),
+    const Search(),
+    const CartPage()
+  ];
   int current = 0;
 
   void onTap(int index) {
@@ -25,22 +31,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: CustomScaffold(
-          children: pages,
           onItemTap: onTap,
           scaffold: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: Color(0xff136068),
+              selectedItemColor: const Color(0xff136068),
               selectedFontSize: 10,
               unselectedFontSize: 10,
               unselectedItemColor: Colors.grey,
               currentIndex: current,
-              backgroundColor: isDarkTheme?Colors.black26:Color(0xfff5f4f4),
-              items: [
+              backgroundColor:
+                  isDarkTheme ? Colors.black26 : const Color(0xfff5f4f4),
+              items: const [
                 BottomNavigationBarItem(
                     activeIcon: Icon(Icons.home_filled),
                     icon: Icon(Icons.home_outlined),
@@ -64,6 +71,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          children: pages,
         ),
       ),
     );

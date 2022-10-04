@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_bali/pages/about_app_page.dart';
 import 'package:wisata_bali/pages/myaccountpage.dart';
 import 'package:wisata_bali/widgets/login_button.dart';
 
@@ -116,7 +117,10 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 height: 10,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const AboutAppPage()));
+                },
                 child: Container(
                     height: 90,
                     width: double.infinity,

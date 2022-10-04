@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/userapi.dart';
+import 'package:wisata_bali/pages/edit_profile_page.dart';
 
 import '../models/profile_model.dart';
 
@@ -48,101 +50,108 @@ class _MyAccountPageState extends State<MyAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: FutureBuilder<UserModel>(
-            future: futureUser,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var image = snapshot.data?.img;
-                var name = snapshot.data?.name;
-                var email = snapshot.data?.email;
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(
+        child: SingleChildScrollView(
+          child: FutureBuilder<UserModel>(
+              future: futureUser,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var image = snapshot.data?.img;
+                  var name = snapshot.data?.name;
+                  var email = snapshot.data?.email;
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Text(
+                                  'My Account',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                        child: CircleAvatar(
+                          radius: 116,
+                          backgroundImage:
+                              NetworkImage('http://10.0.2.2:3000/$image'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Column(
                         children: [
+                          Text(
+                            '$name',
+                            style: const TextStyle(
+                                fontSize: 40, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '$email',
+                            style: const TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.w400),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).pop();
+                              Navigator.of(context).push(CupertinoPageRoute(
+                                  builder: (context) =>
+                                      const EditProfilePage()));
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          const Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Text(
-                                'My Account',
+                            child: Container(
+                              width: 238,
+                              height: 60,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                      color: const Color(0xff136068),
+                                      width: 3)),
+                              child: const Text(
+                                'Edit Profile',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: Color(0xff136068),
                                     fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
-                          ),
+                          )
                         ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                      child: CircleAvatar(
-                        radius: 90,
-                        backgroundImage:
-                            NetworkImage('http://10.0.2.2:3000/$image'),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          '$name',
-                          style: const TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '$email',
-                          style: const TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            width: 238,
-                            height: 60,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(
-                                    color: const Color(0xff136068), width: 3)),
-                            child: const Text(
-                              'Edit Profile',
-                              style: TextStyle(
-                                  color: Color(0xff136068),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                );
-              } else {
-                return const Center(
-                  child: Text('No Account'),
-                );
-              }
-            }),
+                      )
+                    ],
+                  );
+                } else {
+                  return const Center(
+                    child: Text('No Account'),
+                  );
+                }
+              }),
+        ),
       ),
     );
   }

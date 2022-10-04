@@ -13,12 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        textTheme: GoogleFonts.latoTextTheme(textTheme)
-      ),
-      darkTheme: ThemeData.dark(),
-      home: HomePage()
-    );
+        title: 'Bali App Journey',
+        theme: ThemeData(textTheme: GoogleFonts.latoTextTheme(textTheme)),
+        darkTheme: ThemeData.dark(),
+        home: HomePage());
   }
 }

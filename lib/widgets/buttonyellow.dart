@@ -12,15 +12,11 @@ class ButtonYellow extends StatelessWidget {
       width: 129,
       height: 42,
       decoration: BoxDecoration(
-          color: Color(0xffFCE40C),
-          borderRadius: BorderRadius.circular(10)
-      ),
+          color: const Color(0xffFCE40C),
+          borderRadius: BorderRadius.circular(10)),
       child: Text(
         title,
-        style: GoogleFonts.salsa(
-            fontSize: 12,
-          color: Colors.black
-        ),
+        style: GoogleFonts.salsa(fontSize: 12, color: Colors.black),
       ),
     );
   }
