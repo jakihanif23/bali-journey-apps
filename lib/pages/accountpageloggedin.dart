@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_bali/pages/myaccountpage.dart';
 import 'package:wisata_bali/widgets/login_button.dart';
 
 class AccountPageLoggedIn extends StatefulWidget {
@@ -34,7 +36,11 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 height: 10,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true).push(
+                      CupertinoPageRoute(
+                          builder: (context) => const MyAccountPage()));
+                },
                 child: Container(
                     height: 90,
                     width: double.infinity,
