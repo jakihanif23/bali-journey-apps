@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:wisata_bali/apiservices/homeapi.dart';
+import 'package:wisata_bali/detailpage/packagetrip_destinations.dart';
 import 'package:wisata_bali/models/packagetripmodel.dart';
 import 'package:wisata_bali/widgets/buttonyellow.dart';
 import 'package:wisata_bali/widgets/packagetripreviewcard.dart';
@@ -106,7 +108,14 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: true).push(
+                                  CupertinoPageRoute(
+                                      builder: (context) =>
+                                          PackageTripDestinations(
+                                            packageTripId: snapshot.data!.id,
+                                          )));
+                            },
                             child: Container(
                                 height: 90,
                                 width: double.infinity,

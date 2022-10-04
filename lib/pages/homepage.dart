@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
       // print(payload);
       print(loginChecker);
     }
+    print(prefs.getString('jwt'));
   }
 
   @override
