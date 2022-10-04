@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_bali/mainpage.dart';
 import 'package:wisata_bali/models/profile_model.dart';
+import 'package:http/http.dart' as http;
 
 import '../apiservices/userapi.dart';
 
@@ -13,12 +17,72 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final String apiUrl = 'http://10.0.2.2:3000/users/profile';
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
+  getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('jwt').toString();
+  }
+
+  updateProfile(
+      String name, String email, String password, String token) async {
+    final payload = {'name': name, 'email': email, 'password': password};
+    final response = await http.put(
+        Uri.parse('http://10.0.2.2:3000/users/profile'),
+        headers: {'access_token': token},
+        body: payload);
+    if (response.statusCode == 201) {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Update Successful'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (builder) => HomePage()),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
+    } else {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Update Failed'),
+            content: const Text('Update Failed'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _emailController.text = '';
+                    _passwordController.text = '';
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -246,7 +310,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                       Center(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            var name = _nameController.text;
+                            var email = _emailController.text;
+                            var password = _passwordController.text;
+                            final prefs = await SharedPreferences.getInstance();
+                            String token = prefs.getString('jwt') ?? '';
+                            updateProfile(name, email, password, token);
+                          },
                           child: Container(
                             height: 42,
                             width: 352,
