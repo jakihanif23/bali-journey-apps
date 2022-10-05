@@ -118,12 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 70),
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          color: const Color(0xff136068).withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(10.0)),
-                      child: Image.asset('assets/google_logos.png'),
+                      height: 50,
+                      width: 50,
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),

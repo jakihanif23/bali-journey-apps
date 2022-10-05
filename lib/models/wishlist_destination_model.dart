@@ -4,15 +4,15 @@
 
 import 'dart:convert';
 
-List<WishlistPackageTrip> wishlistPackageTripFromJson(String str) =>
-    List<WishlistPackageTrip>.from(
-        json.decode(str).map((x) => WishlistPackageTrip.fromJson(x)));
+List<WishlistDestination> wishlistDestinationFromJson(String str) =>
+    List<WishlistDestination>.from(
+        json.decode(str).map((x) => WishlistDestination.fromJson(x)));
 
-String wishlistPackageTripToJson(List<WishlistPackageTrip> data) =>
+String wishlistDestinationToJson(List<WishlistDestination> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class WishlistPackageTrip {
-  WishlistPackageTrip({
+class WishlistDestination {
+  WishlistDestination({
     required this.id,
     required this.name,
     required this.categoryId,
@@ -40,8 +40,8 @@ class WishlistPackageTrip {
   DateTime updatedAt;
   List<ImageData> images;
 
-  factory WishlistPackageTrip.fromJson(Map<String, dynamic> json) =>
-      WishlistPackageTrip(
+  factory WishlistDestination.fromJson(Map<String, dynamic> json) =>
+      WishlistDestination(
         id: json["id"],
         name: json["name"],
         categoryId: json["categoryId"],

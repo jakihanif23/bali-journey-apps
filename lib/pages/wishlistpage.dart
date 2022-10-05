@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/userapi.dart';
+import 'package:wisata_bali/apiservices/wishlistapi.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
 import 'package:wisata_bali/models/profile_model.dart';
-import 'package:wisata_bali/pages/accountpage.dart';
+import 'package:wisata_bali/models/wishlist_destination_model.dart';
 import 'package:wisata_bali/widgets/wishlistdestinationcard.dart';
 import 'package:wisata_bali/widgets/wishlistpackagetripcard.dart';
-
-import 'accountpageloggedin.dart';
 
 class Wishlist extends StatefulWidget {
   const Wishlist({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
       // });
       // print(response.body);
       // print(payload);
-      print(loginChecker);
+      // print(loginChecker);
     }
   }
 
@@ -48,6 +47,23 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     checkLogin();
+    getWishDest();
+  }
+
+  List<WishlistDestination>? listDestination;
+  var isLoadedDest = false;
+  getWishDest() async {
+    var prefs = await SharedPreferences.getInstance();
+    var getString = prefs.getString('jwt');
+    if (getString != null) {
+      listDestination = await WishlistApi()
+          .getListDestinations(prefs.getString('jwt').toString());
+      if (listDestination != null) {
+        setState(() {
+          isLoadedDest = true;
+        });
+      }
+    }
   }
 
   @override
@@ -80,58 +96,6 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                                     : const Color(0xff136068))),
                       ),
                     ),
-                    loginChecker
-                        ? FutureBuilder<UserModel>(
-                            future: futureUser,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        CupertinoPageRoute(
-                                            builder: (context) =>
-                                                const AccountPageLoggedIn()));
-                                  },
-                                  child: Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                                    child: CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: NetworkImage(
-                                          'http://10.0.2.2:3000/${snapshot.data!.img}'),
-                                    ),
-                                  ),
-                                );
-                              }
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(CupertinoPageRoute(
-                                      builder: (context) => const Account()));
-                                },
-                                child: Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                                  child: const CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage:
-                                        AssetImage('assets/man.jpg'),
-                                  ),
-                                ),
-                              );
-                            })
-                        : InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(CupertinoPageRoute(
-                                  builder: (context) => const Account()));
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                              child: const CircleAvatar(
-                                radius: 30,
-                                backgroundImage: AssetImage('assets/man.jpg'),
-                              ),
-                            ),
-                          )
                   ],
                 ),
               ),
@@ -166,20 +130,32 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                   children: [
                     loginChecker
                         ? ListView.builder(
-                            itemCount: ratingnilai.length,
+                            itemCount: listDestination!.length,
                             itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(CupertinoPageRoute(
-                                      builder: (context) => DetailDestination(
-                                          destinationId: index)));
-                                },
-                                child: WishlistDestinationCard(
-                                    image: 'assets/bg.jpg',
-                                    title: 'Title $index',
-                                    rating: ratingnilai[index],
-                                    place: 'place $index'),
-                              );
+                              if (listDestination!.isNotEmpty) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                DetailDestination(
+                                                    destinationId: index)));
+                                  },
+                                  child: WishlistDestinationCard(
+                                      image: 'assets/bg.jpg',
+                                      title: 'Title $index',
+                                      rating: ratingnilai[index],
+                                      place: 'place $index'),
+                                );
+                              } else if (listDestination!.isEmpty) {
+                                return const Center(
+                                  child: Text('Wishlist Empty'),
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
                             },
                           )
                         : const Center(
