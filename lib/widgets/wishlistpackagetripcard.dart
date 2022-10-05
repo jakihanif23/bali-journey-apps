@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 
 class WishlistPackageTripCard extends StatelessWidget {
   final String title;
@@ -17,9 +18,11 @@ class WishlistPackageTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyformatter =
+        NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
       height: 133,
       child: Row(
         children: [
@@ -29,18 +32,19 @@ class WishlistPackageTripCard extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                    image: AssetImage(image), fit: BoxFit.cover)),
+                    image: NetworkImage('http://10.0.2.2:3000/$image'),
+                    fit: BoxFit.cover)),
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Color(0xff136068),
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
@@ -50,24 +54,24 @@ class WishlistPackageTripCard extends StatelessWidget {
                       itemSize: 20,
                       itemCount: 5,
                       rating: rating,
-                      itemBuilder: (contex, index) => Icon(
+                      itemBuilder: (contex, index) => const Icon(
                         Icons.star,
                         color: Color(0xff136068),
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Pickup Point',
                     style: TextStyle(color: Color(0xff136068), fontSize: 10),
                   ),
-                  Text(
+                  const Text(
                     'Ngurah Rai Airport',
                     style: TextStyle(
                         color: Color(0xff136068),
                         fontSize: 14,
                         fontWeight: FontWeight.w400),
                   ),
-                  Text(
+                  const Text(
                     '13.00 WITA',
                     style: TextStyle(
                         color: Color(0xff136068),
@@ -75,8 +79,8 @@ class WishlistPackageTripCard extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    'IDR $price /pax',
-                    style: TextStyle(
+                    '${currencyformatter.format(int.parse(price))}/pax',
+                    style: const TextStyle(
                         color: Color(0xff136068),
                         fontSize: 14,
                         fontWeight: FontWeight.w100),

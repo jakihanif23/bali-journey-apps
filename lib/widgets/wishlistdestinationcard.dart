@@ -17,10 +17,11 @@ class WishlistDestinationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
       height: 133,
       child: Row(
         children: [
@@ -30,11 +31,12 @@ class WishlistDestinationCard extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                    image: AssetImage(image), fit: BoxFit.cover)),
+                    image: NetworkImage('http://10.0.2.2:3000/$image'),
+                    fit: BoxFit.cover)),
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -42,7 +44,9 @@ class WishlistDestinationCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                        color: isDarkTheme?Colors.white:Color(0xff136068),
+                        color: isDarkTheme
+                            ? Colors.white
+                            : const Color(0xff136068),
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
@@ -53,13 +57,19 @@ class WishlistDestinationCard extends StatelessWidget {
                       rating: rating,
                       itemBuilder: (contex, index) => Icon(
                         Icons.star,
-                        color: isDarkTheme?Colors.white:Color(0xff136068),
+                        color: isDarkTheme
+                            ? Colors.white
+                            : const Color(0xff136068),
                       ),
                     ),
                   ),
                   Text(
                     place,
-                    style: TextStyle(color: isDarkTheme?Colors.white: Color(0xff136068), fontSize: 14),
+                    style: TextStyle(
+                        color: isDarkTheme
+                            ? Colors.white
+                            : const Color(0xff136068),
+                        fontSize: 14),
                   )
                 ],
               ),

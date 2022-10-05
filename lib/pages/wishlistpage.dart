@@ -5,8 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/userapi.dart';
 import 'package:wisata_bali/apiservices/wishlistapi.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
+import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/profile_model.dart';
 import 'package:wisata_bali/models/wishlist_destination_model.dart';
+import 'package:wisata_bali/models/wishlist_packagetrip_model.dart';
 import 'package:wisata_bali/widgets/wishlistdestinationcard.dart';
 import 'package:wisata_bali/widgets/wishlistpackagetripcard.dart';
 
@@ -48,6 +50,7 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
     super.initState();
     checkLogin();
     getWishDest();
+    getWishPack();
   }
 
   List<WishlistDestination>? listDestination;
@@ -58,9 +61,25 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
     if (getString != null) {
       listDestination = await WishlistApi()
           .getListDestinations(prefs.getString('jwt').toString());
-      if (listDestination != null) {
+      if (listDestination!.isNotEmpty) {
         setState(() {
           isLoadedDest = true;
+        });
+      }
+    }
+  }
+
+  var isLoadedPack = false;
+  List<WishlistPackageTrip>? listPackageTrip;
+  getWishPack() async {
+    var prefs = await SharedPreferences.getInstance();
+    var getString = prefs.getString('jwt');
+    if (getString != null) {
+      listPackageTrip = await WishlistApi()
+          .getListPackageTrip(prefs.getString('jwt').toString());
+      if (listPackageTrip!.isNotEmpty) {
+        setState(() {
+          isLoadedPack = true;
         });
       }
     }
@@ -129,51 +148,70 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                   controller: tabController,
                   children: [
                     loginChecker
-                        ? ListView.builder(
-                            itemCount: listDestination!.length,
-                            itemBuilder: (context, index) {
-                              if (listDestination!.isNotEmpty) {
+                        ? Visibility(
+                            visible: isLoadedDest,
+                            replacement:
+                                const Center(child: Text('Wishlist Empty')),
+                            child: ListView.builder(
+                              itemCount: listDestination?.length,
+                              itemBuilder: (context, index) {
+                                var id = listDestination![index].id;
+                                var rating = double.parse(
+                                    listDestination![index].rating.toString());
+                                var address = listDestination![index].address;
+                                var img = listDestination![index].images[0].img;
+                                var name = listDestination![index].name;
                                 return InkWell(
                                   onTap: () {
                                     Navigator.of(context).push(
                                         CupertinoPageRoute(
                                             builder: (context) =>
                                                 DetailDestination(
-                                                    destinationId: index)));
+                                                    destinationId: id)));
                                   },
                                   child: WishlistDestinationCard(
-                                      image: 'assets/bg.jpg',
-                                      title: 'Title $index',
-                                      rating: ratingnilai[index],
-                                      place: 'place $index'),
+                                      image: img,
+                                      title: name,
+                                      rating: rating,
+                                      place: address),
                                 );
-                              } else if (listDestination!.isEmpty) {
-                                return const Center(
-                                  child: Text('Wishlist Empty'),
-                                );
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
+                              },
+                            ),
                           )
                         : const Center(
                             child: Text('Not Logged In'),
                           ),
                     loginChecker
-                        ? ListView.builder(
-                            itemCount: ratingnilai.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                child: WishlistPackageTripCard(
-                                  title: 'Title $index',
-                                  image: 'assets/bg.jpg',
-                                  rating: ratingnilai[index],
-                                  price: '1.500.000',
-                                ),
-                              );
-                            },
+                        ? Visibility(
+                            visible: isLoadedPack,
+                            replacement:
+                                const Center(child: Text('Wishlist Empty')),
+                            child: ListView.builder(
+                              itemCount: listPackageTrip?.length,
+                              itemBuilder: (context, index) {
+                                var title = listPackageTrip![index].name;
+                                var img = listPackageTrip![index].images[0].img;
+                                var rating = double.parse(
+                                    listPackageTrip![index].rating.toString());
+                                var price = listPackageTrip![index].price;
+                                var id = listPackageTrip![index].id;
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                DetailPackageTrip(
+                                                    packageTripId: id)));
+                                  },
+                                  child: WishlistPackageTripCard(
+                                    title: title,
+                                    image: img,
+                                    rating: rating,
+                                    price: price,
+                                  ),
+                                );
+                              },
+                            ),
                           )
                         : const Center(
                             child: Text('Not Logged In'),
