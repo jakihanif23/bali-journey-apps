@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:intl/intl.dart';
@@ -18,14 +20,19 @@ class _CartPageState extends State<CartPage> {
   final currencyformatter = NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
   Future<CartModel>? futureCart;
   var loginChecker = false;
-  updateToPayment(Map payload) async {
+  updateToPayment(var list) async {
     final prefs = await SharedPreferences.getInstance();
     const String apiUrl =
         'https://api-bali-journey.herokuapp.com/users/payments/carts';
     final getString = prefs.getString('jwt');
     var response = await http.put(Uri.parse(apiUrl),
-        headers: {'access_token': getString.toString()}, body: payload);
-    if (response.statusCode == 200) {
+        headers: {
+          'access_token': getString.toString(),
+          'Content-Type': 'application/json'
+        },
+        body: list);
+    print(list);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       showAnimatedDialog(
         context: context,
         barrierDismissible: true,
@@ -93,6 +100,7 @@ class _CartPageState extends State<CartPage> {
         animationType: DialogTransitionType.slideFromBottomFade,
         curve: Curves.ease,
         builder: (context) {
+          print(response.statusCode);
           return AlertDialog(
             title: const Text('Payment Failed'),
             content: const Text('Error Encountered'),
@@ -475,8 +483,9 @@ class _CartPageState extends State<CartPage> {
                                       for (int i = 0; i < cart.length; i++) {
                                         list.add(cart[i].id);
                                       }
-                                      var payload = {'id': list};
-                                      updateToPayment(payload);
+                                      // print(json.encode({'id': list}));
+                                      updateToPayment(
+                                          json.encode({'id': list}));
                                     },
                                     child: const ButtonYellow(title: 'Order'))
                               ],

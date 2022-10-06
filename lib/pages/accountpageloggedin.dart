@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/pages/about_app_page.dart';
+import 'package:wisata_bali/pages/list_transaction_history_page.dart';
 import 'package:wisata_bali/pages/myaccountpage.dart';
 import 'package:wisata_bali/pages/payment_lists_page.dart';
 import 'package:wisata_bali/widgets/login_button.dart';
@@ -77,7 +78,12 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 height: 3,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true).push(
+                      CupertinoPageRoute(
+                          builder: (builder) =>
+                              const ListTransactionHistoryPage()));
+                },
                 child: Container(
                     height: 90,
                     width: double.infinity,

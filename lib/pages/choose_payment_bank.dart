@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_bali/pages/get_detail_payment.dart';
 import 'package:wisata_bali/widgets/payment_bank_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,6 +43,9 @@ class _ChoosePaymentBankState extends State<ChoosePaymentBank> {
                   onPressed: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                        builder: (builder) =>
+                            GetDetailPaymentPage(id: widget.id)));
                   },
                   child: const Text('OK'))
             ],
@@ -116,7 +121,7 @@ class _ChoosePaymentBankState extends State<ChoosePaymentBank> {
                     var bank = payload[index]['bank'];
                     return InkWell(
                       onTap: () {
-                        print(bank);
+                        paymentPay(bank.toString());
                       },
                       child: PaymentBankWidget(
                           image: image.toString(),

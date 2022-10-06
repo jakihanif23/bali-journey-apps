@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/paymentapi.dart';
 import 'package:wisata_bali/models/list_payment_unpaid_model.dart';
 import 'package:wisata_bali/pages/choose_payment_bank.dart';
+import 'package:wisata_bali/pages/get_detail_payment.dart';
 
 class PaymentListsPage extends StatefulWidget {
   const PaymentListsPage({super.key});
@@ -132,311 +133,316 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
               ),
               Visibility(
                 visible: isLoaded,
-                replacement: const Center(
-                  child: CircularProgressIndicator(),
+                replacement: const SizedBox(
+                  child: Center(
+                    child: Text('0 Payment List'),
+                  ),
                 ),
                 child: SizedBox(
-                  height: 600,
-                  child: listPaymentUnpaid == null
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : ListView.builder(
-                          itemCount: listPaymentUnpaid!.length,
-                          itemBuilder: (context, index) {
-                            var paymentCode =
-                                listPaymentUnpaid![index].paymentCode;
-                            var total = listPaymentUnpaid![index].total;
-                            var status = listPaymentUnpaid![index].status;
-                            var cartItems = listPaymentUnpaid![index].cartItems;
-                            var id = listPaymentUnpaid![index].id;
-                            return Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.all(10),
-                                  height: 370,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1, color: Colors.black12),
-                                      borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                  children:
+                      List.generate(listPaymentUnpaid?.length ?? 0, (index) {
+                    var paymentCode = listPaymentUnpaid![index].paymentCode;
+                    var total = listPaymentUnpaid![index].total;
+                    var status = listPaymentUnpaid![index].status;
+                    var cartItems = listPaymentUnpaid![index].cartItems;
+                    var id = listPaymentUnpaid![index].id;
+                    return Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 1, color: Colors.black12),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '#$paymentCode',
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: 100,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: status == 'unpaid'
+                                            ? const Color.fromARGB(
+                                                255, 255, 44, 44)
+                                            : const Color(0xffD9D9D9),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Text(
+                                      status,
+                                      style: GoogleFonts.salsa(
+                                          fontSize: 12, color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
                                   child: Column(
+                                children:
+                                    List.generate(cartItems.length, (index) {
+                                  var date = cartItems[index].date;
+                                  var title = cartItems[index].name;
+                                  var price = cartItems[index].price;
+                                  var amount = cartItems[index].amount;
+                                  var image = cartItems[index].images[0].img;
+                                  var total = amount * int.parse(price);
+                                  return Column(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            '#$paymentCode',
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: 100,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                color: status == 'unpaid'
-                                                    ? const Color.fromARGB(
-                                                        255, 255, 44, 44)
-                                                    : const Color(0xffD9D9D9),
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Text(
-                                              status,
-                                              style: GoogleFonts.salsa(
-                                                  fontSize: 12,
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 200,
-                                        width: 400,
-                                        child: ListView.builder(
-                                          itemCount: cartItems.length,
-                                          itemBuilder: (context, index) {
-                                            var date = cartItems[index].date;
-                                            var title = cartItems[index].name;
-                                            var price = cartItems[index].price;
-                                            var amount =
-                                                cartItems[index].amount;
-                                            var image =
-                                                cartItems[index].images[0].img;
-                                            var total =
-                                                amount * int.parse(price);
-                                            return Column(
-                                              children: [
-                                                const Divider(),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 1,
-                                                          color:
-                                                              Colors.black12),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Container(
-                                                            height: 120,
-                                                            width: 120,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        10),
-                                                                image: DecorationImage(
-                                                                    image: NetworkImage(
-                                                                        'https://api-bali-journey.herokuapp.com/$image'),
-                                                                    fit: BoxFit
-                                                                        .cover)),
-                                                          ),
-                                                          Expanded(
-                                                            child: Container(
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      20,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        right:
-                                                                            10),
-                                                                    child: Text(
-                                                                      title,
-                                                                      style: const TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              20,
-                                                                          color:
-                                                                              Color(0xff136068)),
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 5,
-                                                                  ),
-                                                                  Container(
-                                                                    child: Text(
-                                                                      '${date.toLocal()}'
-                                                                          .split(
-                                                                              ' ')[0],
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          color:
-                                                                              Color(0xff136068)),
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 15,
-                                                                  ),
-                                                                  Column(
-                                                                    children: [
-                                                                      Container(
-                                                                        alignment:
-                                                                            Alignment.centerLeft,
-                                                                        child:
-                                                                            Text(
-                                                                          '$amount pax x ${currencyformatter.format(int.parse(price))}',
-                                                                          style: const TextStyle(
-                                                                              color: Color(0xff136068),
-                                                                              fontSize: 12,
-                                                                              fontWeight: FontWeight.w100),
-                                                                        ),
-                                                                      ),
-                                                                      Container(
-                                                                        alignment:
-                                                                            Alignment.centerLeft,
-                                                                        child:
-                                                                            Text(
-                                                                          currencyformatter
-                                                                              .format(total),
-                                                                          style: const TextStyle(
-                                                                              color: Color(0xff136068),
-                                                                              fontSize: 18,
-                                                                              fontWeight: FontWeight.w100),
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              deletePayment(id.toString());
-                                            },
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              width: 100,
-                                              height: 30,
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffFC700C),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Text(
-                                                'Cancel Payment',
-                                                style: GoogleFonts.salsa(
-                                                    fontSize: 12,
-                                                    color: Colors.black),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                      const Divider(),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                width: 1,
+                                                color: Colors.black12),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Column(
                                           children: [
-                                            Column(
+                                            Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                const Text(
-                                                  'Total',
-                                                  style: TextStyle(
-                                                      color: Color(0xff136068)),
+                                                Container(
+                                                  height: 120,
+                                                  width: 120,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(
+                                                              'https://api-bali-journey.herokuapp.com/$image'),
+                                                          fit: BoxFit.cover)),
                                                 ),
-                                                Text(
-                                                  currencyformatter
-                                                      .format(int.parse(total)),
-                                                  style: const TextStyle(
-                                                      fontSize: 20),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        CupertinoPageRoute(
-                                                            builder: (builder) =>
-                                                                ChoosePaymentBank(
-                                                                  id: id
-                                                                      .toString(),
-                                                                )));
-                                                  },
+                                                Expanded(
                                                   child: Container(
-                                                    alignment: Alignment.center,
-                                                    width: 129,
-                                                    height: 35,
-                                                    decoration: BoxDecoration(
-                                                        color: const Color(
-                                                            0xffF7FC0C),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    child: Text(
-                                                      'Payment',
-                                                      style: GoogleFonts.salsa(
-                                                          fontSize: 12,
-                                                          color: Colors.black),
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(20, 0, 0, 0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 10),
+                                                          child: Text(
+                                                            title,
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20,
+                                                                color: Color(
+                                                                    0xff136068)),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Container(
+                                                          child: Text(
+                                                            '${date.toLocal()}'
+                                                                .split(' ')[0],
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                color: Color(
+                                                                    0xff136068)),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 15,
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Container(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                '$amount pax x ${currencyformatter.format(int.parse(price))}',
+                                                                style: const TextStyle(
+                                                                    color: Color(
+                                                                        0xff136068),
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w100),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                currencyformatter
+                                                                    .format(
+                                                                        total),
+                                                                style: const TextStyle(
+                                                                    color: Color(
+                                                                        0xff136068),
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w100),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
                                                     ),
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
+                                            const SizedBox(
+                                              height: 10,
+                                            )
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ],
+                                  );
+                                }),
+                              )),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      deletePayment(id.toString());
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 100,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xffFC700C),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Text(
+                                        'Cancel Payment',
+                                        style: GoogleFonts.salsa(
+                                            fontSize: 12, color: Colors.black),
+                                      ),
+                                    ),
                                   ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Total',
+                                          style: TextStyle(
+                                              color: Color(0xff136068)),
+                                        ),
+                                        Text(
+                                          currencyformatter
+                                              .format(int.parse(total)),
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        status == 'unpaid'
+                                            ? InkWell(
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      CupertinoPageRoute(
+                                                          builder: (builder) =>
+                                                              ChoosePaymentBank(
+                                                                id: id
+                                                                    .toString(),
+                                                              )));
+                                                },
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 129,
+                                                  height: 35,
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffF7FC0C),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Text(
+                                                    'Payment',
+                                                    style: GoogleFonts.salsa(
+                                                        fontSize: 12,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                              )
+                                            : InkWell(
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      CupertinoPageRoute(
+                                                          builder: (builder) =>
+                                                              GetDetailPaymentPage(
+                                                                  id: id
+                                                                      .toString())));
+                                                },
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 129,
+                                                  height: 35,
+                                                  decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffF7FC0C),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Text(
+                                                    'Pay Now',
+                                                    style: GoogleFonts.salsa(
+                                                        fontSize: 12,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                              )
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            );
-                          },
+                              )
+                            ],
+                          ),
                         ),
-                ),
+                      ],
+                    );
+                  }),
+                )),
               )
             ],
           ),
