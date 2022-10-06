@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wisata_bali/detailpage/detaildestination.dart';
 import 'package:wisata_bali/models/list_destination_model.dart';
 import 'package:wisata_bali/widgets/searchcard.dart';
 import 'package:http/http.dart' as http;
@@ -115,12 +117,20 @@ class _SearchState extends State<Search> {
                       : ListView.builder(
                           itemCount: listData2.length,
                           itemBuilder: (context, index) {
-                            return SearchCard(
-                              category: listData2[index].category.name,
-                              title: listData2[index].name,
-                              rating: listData2[index].rating.toDouble(),
-                              location: listData2[index].address,
-                              image: listData2[index].images[0].img,
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(CupertinoPageRoute(
+                                    builder: (context) => DetailDestination(
+                                          destinationId: listData2[index].id,
+                                        )));
+                              },
+                              child: SearchCard(
+                                category: listData2[index].category.name,
+                                title: listData2[index].name,
+                                rating: listData2[index].rating.toDouble(),
+                                location: listData2[index].address,
+                                image: listData2[index].images[0].img,
+                              ),
                             );
                           },
                         )),

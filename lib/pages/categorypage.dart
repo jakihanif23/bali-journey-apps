@@ -102,6 +102,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                             0, 0, 20, 0),
                                         child: InkWell(
                                           onTap: () {
+                                            print(listDestinations![index].id);
                                             Navigator.of(context).push(
                                                 CupertinoPageRoute(
                                                     builder: (context) =>

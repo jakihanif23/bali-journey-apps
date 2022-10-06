@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/homeapi.dart';
+import 'package:wisata_bali/booking/bookingpage.dart';
 import 'package:wisata_bali/detailpage/packagetrip_destinations.dart';
 import 'package:wisata_bali/models/packagetripmodel.dart';
 import 'package:wisata_bali/widgets/buttonyellow.dart';
@@ -275,7 +278,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                   height: 377,
                                   child: snapshot.data!.reviews.isEmpty
                                       ? const Center(
-                                          child: Text('Reviews 0'),
+                                          child: Text('No Reviews'),
                                         )
                                       : ListView.builder(
                                           itemCount:
@@ -346,9 +349,47 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: const ButtonYellow(title: 'Booking'),
+                        child: InkWell(
+                          onTap: () async {
+                            var prefs = await SharedPreferences.getInstance();
+                            var getString = prefs.getString('jwt');
+                            if (getString != null) {
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(CupertinoPageRoute(
+                                      builder: (context) => BookingPage(
+                                            title: name,
+                                            rating: rating.toString(),
+                                            price: price,
+                                            image: snapshot.data!.images[0].img,
+                                          )));
+                            } else {
+                              showAnimatedDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                animationType:
+                                    DialogTransitionType.slideFromBottomFade,
+                                curve: Curves.ease,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('Alert Booking'),
+                                    content: const Text(
+                                        'You Are Not Logged in, Please Logged in to Book'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('OK'))
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: const ButtonYellow(title: 'Booking'),
+                          ),
                         ),
                       )
                     ],

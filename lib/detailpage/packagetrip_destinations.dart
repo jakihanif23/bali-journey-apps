@@ -57,7 +57,9 @@ class _PackageTripDestinationsState extends State<PackageTripDestinations> {
                               child: Text(
                                 'Package Trip Details ',
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -71,7 +73,11 @@ class _PackageTripDestinationsState extends State<PackageTripDestinations> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Pickup Point'),
+                            const Text(
+                              'Trip Destination',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
                             SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: 100,
@@ -112,7 +118,8 @@ class _PackageTripDestinationsState extends State<PackageTripDestinations> {
                                             );
                                           } else {
                                             return WishlistDestinationCard(
-                                                image: 'assets/bg.jpg',
+                                                image: destinasi[index]
+                                                    ['images'][0]['img'],
                                                 title: destinasi[index]['name'],
                                                 rating: double.parse(
                                                     destinasi[index]['rating']

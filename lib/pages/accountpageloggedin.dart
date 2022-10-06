@@ -72,6 +72,9 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                       ],
                     )),
               ),
+              const SizedBox(
+                height: 3,
+              ),
               InkWell(
                 onTap: () {},
                 child: Container(
@@ -118,8 +121,8 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const AboutAppPage()));
+                  Navigator.of(context, rootNavigator: true).push(
+                      CupertinoPageRoute(builder: (_) => const AboutAppPage()));
                 },
                 child: Container(
                     height: 90,

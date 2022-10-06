@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         curve: Curves.ease,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Login Successful'),
+            title: const Text('Login Success'),
             actions: [
               TextButton(
                   onPressed: () {

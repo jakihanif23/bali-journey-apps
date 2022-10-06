@@ -26,7 +26,7 @@ class HomeApi {
   }
 
   Future<DestinationModel> getDataDestination(int id) async {
-    final response = await http.get(Uri.parse('$apiUrl/destination/1'));
+    final response = await http.get(Uri.parse('$apiUrl/destination/$id'));
     if (response.statusCode == 200) {
       return DestinationModel.fromJson(jsonDecode(response.body));
     } else {

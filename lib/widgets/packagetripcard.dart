@@ -18,9 +18,12 @@ class PackageTripCard extends StatelessWidget {
     return Column(
       children: [
         const Divider(),
-        SizedBox(
+        Container(
           height: 133,
           width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.black12),
+              borderRadius: BorderRadius.circular(10)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -28,6 +31,7 @@ class PackageTripCard extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 width: 120,
                 decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                         image: NetworkImage('http://10.0.2.2:3000/$image'),
                         fit: BoxFit.cover)),

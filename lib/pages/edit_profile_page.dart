@@ -35,26 +35,50 @@ class _EditProfilePageState extends State<EditProfilePage> {
         headers: {'access_token': token},
         body: payload);
     if (response.statusCode == 201) {
-      showAnimatedDialog(
-        context: context,
-        barrierDismissible: true,
-        animationType: DialogTransitionType.slideFromBottomFade,
-        curve: Curves.ease,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Update Successful'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        CupertinoPageRoute(builder: (builder) => HomePage()),
-                        (Route<dynamic> route) => false);
-                  },
-                  child: const Text('OK'))
-            ],
-          );
-        },
-      );
+      if (_passwordController.text == '' ||
+          _emailController.text == '' ||
+          _nameController.text == '') {
+        showAnimatedDialog(
+          context: context,
+          barrierDismissible: true,
+          animationType: DialogTransitionType.slideFromBottomFade,
+          curve: Curves.ease,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Update Failed'),
+              content: const Text('Data Should not be Empty'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'))
+              ],
+            );
+          },
+        );
+      } else {
+        showAnimatedDialog(
+          context: context,
+          barrierDismissible: true,
+          animationType: DialogTransitionType.slideFromBottomFade,
+          curve: Curves.ease,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Update Successful'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          CupertinoPageRoute(builder: (builder) => HomePage()),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: const Text('OK'))
+              ],
+            );
+          },
+        );
+      }
     } else {
       showAnimatedDialog(
         context: context,

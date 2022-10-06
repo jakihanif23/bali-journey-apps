@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/homeapi.dart';
@@ -49,6 +50,9 @@ class _DetailDestinationState extends State<DetailDestination> {
     checkLogin();
     futureDestination = HomeApi().getDataDestination(widget.destinationId);
   }
+
+  final TextEditingController _reviewController = TextEditingController();
+  double ratingIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +173,109 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                   ],
                                                 );
                                               }));
+                                        } else {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return SingleChildScrollView(
+                                                  child: SizedBox(
+                                                    height: 400,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          10, 20, 0, 0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Column(
+                                                            children: [
+                                                              const Text(
+                                                                'Review',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color: Color(
+                                                                        0xff136068),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              TextField(
+                                                                controller:
+                                                                    _reviewController,
+                                                                style: const TextStyle(
+                                                                    color: Color(
+                                                                        0xff136068)),
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  fillColor:
+                                                                      const Color(
+                                                                          0xffD9F9F8),
+                                                                  border: OutlineInputBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                      borderSide:
+                                                                          const BorderSide(
+                                                                              color: Color(0xff136068))),
+                                                                  hintText:
+                                                                      'Review',
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              RatingBar.builder(
+                                                                initialRating:
+                                                                    ratingIndex,
+                                                                minRating: 1,
+                                                                updateOnDrag:
+                                                                    true,
+                                                                itemBuilder: ((context,
+                                                                        index) =>
+                                                                    const Icon(
+                                                                      Icons
+                                                                          .star,
+                                                                      color: Colors
+                                                                          .amber,
+                                                                    )),
+                                                                onRatingUpdate:
+                                                                    (rating) =>
+                                                                        setState(
+                                                                            () {
+                                                                  ratingIndex =
+                                                                      rating;
+                                                                  print(
+                                                                      ratingIndex);
+                                                                }),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Text(
+                                                                  'Rating $ratingIndex'),
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  print(
+                                                                      ratingIndex);
+                                                                },
+                                                                child:
+                                                                    const Text(
+                                                                        'enter'),
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              });
                                         }
                                       },
                                       child: const GiveReviewButton(),

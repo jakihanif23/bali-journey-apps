@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wisata_bali/apiservices/listapi.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/list_package_trip_model.dart';
-import 'package:wisata_bali/widgets/buttonyellow.dart';
 import 'package:wisata_bali/widgets/packagetripcard.dart';
 
 class PackageTrip extends StatefulWidget {
@@ -74,7 +73,7 @@ class _PackageTripState extends State<PackageTrip> {
                           color: isDarkTheme ? Colors.white : Colors.black))),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.64,
+              height: MediaQuery.of(context).size.height * 0.7,
               child: Visibility(
                 visible: isLoaded,
                 replacement: const Center(
@@ -103,13 +102,6 @@ class _PackageTripState extends State<PackageTrip> {
                     }),
               ),
             ),
-            Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(top: 15),
-                height: 70,
-                child: Column(
-                  children: const [ButtonYellow(title: 'Filter')],
-                )),
           ],
         )),
       ),
