@@ -17,7 +17,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final String apiUrl = 'http://10.0.2.2:3000/users/profile';
+  final String apiUrl = 'https://api-bali-journey.herokuapp.com/users/profile';
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -31,7 +31,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       String name, String email, String password, String token) async {
     final payload = {'name': name, 'email': email, 'password': password};
     final response = await http.put(
-        Uri.parse('http://10.0.2.2:3000/users/profile'),
+        Uri.parse('https://api-bali-journey.herokuapp.com/users/profile'),
         headers: {'access_token': token},
         body: payload);
     if (response.statusCode == 201) {

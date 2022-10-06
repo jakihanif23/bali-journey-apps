@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   loginUser(String email, String password) async {
-    const String apiUrl = 'http://10.0.2.2:3000/home';
+    const String apiUrl = 'https://api-bali-journey.herokuapp.com/home';
     var loginArr;
     var response = await http.post(Uri.parse('$apiUrl/login'),
         body: {'email': email, 'password': password});

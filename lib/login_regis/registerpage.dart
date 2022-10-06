@@ -16,7 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final String apiUrl = 'http://10.0.2.2:3000/home';
+  final String apiUrl = 'https://api-bali-journey.herokuapp.com/home';
 
   @override
   void dispose() {

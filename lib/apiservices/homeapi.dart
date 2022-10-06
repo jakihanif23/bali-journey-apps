@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:wisata_bali/models/packagetripmodel.dart';
 
 class HomeApi {
-  final String apiUrl = 'http://10.0.2.2:3000/home';
+  final String apiUrl = 'https://api-bali-journey.herokuapp.com/home';
   Future<HomeModel> getHomeApi() async {
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
