@@ -26,8 +26,8 @@ class ListPackageTripModel {
   String name;
   String description;
   String price;
-  int rating;
-  List<Image> images;
+  double rating;
+  List<DataImage> images;
   List<DestinationElement> destinations;
 
   factory ListPackageTripModel.fromJson(Map<String, dynamic> json) =>
@@ -36,8 +36,9 @@ class ListPackageTripModel {
         name: json["name"],
         description: json["description"],
         price: json["price"],
-        rating: json["rating"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        rating: json["rating"].toDouble(),
+        images: List<DataImage>.from(
+            json["images"].map((x) => DataImage.fromJson(x))),
         destinations: List<DestinationElement>.from(
             json["destinations"].map((x) => DestinationElement.fromJson(x))),
       );
@@ -147,8 +148,8 @@ class DestinationDestination {
       };
 }
 
-class Image {
-  Image({
+class DataImage {
+  DataImage({
     required this.id,
     required this.packageTripId,
     required this.img,
@@ -158,7 +159,7 @@ class Image {
   int packageTripId;
   String img;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory DataImage.fromJson(Map<String, dynamic> json) => DataImage(
         id: json["id"],
         packageTripId: json["package_tripId"],
         img: json["img"],

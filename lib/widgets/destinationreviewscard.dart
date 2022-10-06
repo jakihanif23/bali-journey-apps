@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class DestinationReviewCard extends StatelessWidget {
-  const DestinationReviewCard({Key? key}) : super(key: key);
+  final String comment;
+  final String name;
+  final double rating;
+  const DestinationReviewCard(
+      {Key? key,
+      required this.comment,
+      required this.name,
+      required this.rating})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +18,7 @@ class DestinationReviewCard extends StatelessWidget {
       width: 377,
       height: 191,
       decoration: BoxDecoration(
-          color: Color(0xffD9F9F8),
+          color: const Color(0xffD9F9F8),
           borderRadius: BorderRadius.circular(10)),
       child: Container(
         child: Column(
@@ -19,63 +28,43 @@ class DestinationReviewCard extends StatelessWidget {
               child: Container(
                 child: Container(
                   child: Row(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10),
-                        child: CircleAvatar(
+                        padding: const EdgeInsets.all(10),
+                        child: const CircleAvatar(
                           radius: 30,
-                          backgroundImage:
-                          AssetImage('assets/man.jpg'),
+                          backgroundImage: AssetImage('assets/man.jpg'),
                         ),
                       ),
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(
-                              0, 10, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Mamang Kesbor',
-                                style: TextStyle(
+                                name,
+                                style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                  color: Colors.black
-                                ),
+                                    color: Colors.black),
                               ),
-                              Text(
-                                'New Delhi',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black
-                                ),
-                              ),
-                              Expanded(
-                                  child: Container(
-                                    child: Text('Bintang di surga'),
-                                  )
-                              )
+                              Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: RatingBarIndicator(
+                                    rating: rating,
+                                    itemCount: 5,
+                                    itemSize: 20,
+                                    itemBuilder: (context, index) => const Icon(
+                                      Icons.star,
+                                      color: Color(0xff136068),
+                                    ),
+                                  ))
                             ],
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 15, 10, 0),
-                          alignment: Alignment.topRight,
-                          child: Text(
-                            '20 Desember 2021',
-                            style: TextStyle(
-                                fontSize: 8,
-                                fontStyle: FontStyle.italic,
-                              color: Colors.black
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -83,16 +72,13 @@ class DestinationReviewCard extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque cursus ex sed egestas sagittis. Nunc suscipit ultrices lorem id viverra. Nam hendrerit nunc eu vulputate pulvinar. Ut dapibus erat vulputate, viverra nunc sed, tempor nisl. Donec eget mi arcu. Sed vitae euismod velit. Aliquam aliquam ex at risus sagittis, vitae ultricies nulla dapibus. Curabitur cursus velit quis ipsum elementum, vitae gravida ipsum pretium. Vivamus nibh massa, auctor quis quam eu, viverra fermentum nisl. Fusce nec pretium mi, ac porta nunc. Integer lacus turpis, interdum eu semper id, iaculis ut odio. Nullam bibendum pharetra tempus. Proin eu libero nec nisl ultricies fringilla vel id sapien. Suspendisse ultricies sagittis orci euismod pulvinar.',
-                  style: TextStyle(
-                      fontSize: 12,
-                    color: Colors.black
-                  ),
+                  comment,
+                  style: const TextStyle(fontSize: 15, color: Colors.black),
                   textAlign: TextAlign.justify,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 6,
+                  maxLines: 4,
                 ),
               ),
             )

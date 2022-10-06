@@ -31,7 +31,7 @@ class DestinationModel {
   int id;
   String name;
   int categoryId;
-  int rating;
+  double rating;
   String description;
   String address;
   String openDay;
@@ -48,7 +48,7 @@ class DestinationModel {
         id: json["id"],
         name: json["name"],
         categoryId: json["categoryId"],
-        rating: json["rating"],
+        rating: double.parse(json["rating"].toString()),
         description: json["description"],
         address: json["address"],
         openDay: json["open_day"],
