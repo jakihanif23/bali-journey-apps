@@ -80,7 +80,6 @@ class _PackageTripDestinationsState extends State<PackageTripDestinations> {
                             ),
                             SizedBox(
                                 width: MediaQuery.of(context).size.width,
-                                height: 100,
                                 child: snapshot.data!.destinations.isEmpty
                                     ? const Center(
                                         child: Text('No Destinations Added'),
@@ -98,6 +97,9 @@ class _PackageTripDestinationsState extends State<PackageTripDestinations> {
                                                 ' ● ${snapshot.data!.destinations[i]['name']}')
                                         ],
                                       )),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             SizedBox(
                                 width: MediaQuery.of(context).size.width,
                                 height: 400,

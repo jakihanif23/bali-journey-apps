@@ -95,8 +95,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
                         padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
                         child: CircleAvatar(
                           radius: 116,
-                          backgroundImage:
-                              NetworkImage('http://10.0.2.2:3000/$image'),
+                          backgroundImage: NetworkImage(
+                              'https://api-bali-journey.herokuapp.com/$image'),
                         ),
                       ),
                       const SizedBox(

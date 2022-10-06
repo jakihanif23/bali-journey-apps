@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
                                   child: CircleAvatar(
                                     radius: 30,
                                     backgroundImage: NetworkImage(
-                                        'http://10.0.2.2:3000/${snapshot.data!.img}'),
+                                        'https://api-bali-journey.herokuapp.com/${snapshot.data!.img}'),
                                   ),
                                 ),
                               );

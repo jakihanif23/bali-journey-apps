@@ -44,6 +44,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var name = snapshot.data!.name;
+          var id = snapshot.data!.id;
           var description = snapshot.data!.description;
           var price = snapshot.data!.price;
           final currencyformatter =
@@ -373,6 +374,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                             rating: rating.toString(),
                                             price: price,
                                             image: snapshot.data!.images[0].img,
+                                            id: id.toString(),
                                           )));
                             } else {
                               showAnimatedDialog(

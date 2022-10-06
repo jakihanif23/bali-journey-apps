@@ -34,7 +34,8 @@ class _ReviewPageState extends State<ReviewPage> {
   giveReview(String review, double rating, String id) async {
     final prefs = await SharedPreferences.getInstance();
     var getString = prefs.getString('jwt').toString();
-    final String apiUrl = 'http://10.0.2.2:3000/users/detail/dest/review/$id';
+    final String apiUrl =
+        'https://api-bali-journey.herokuapp.com/users/detail/dest/review/$id';
     var response = await http.post(Uri.parse(apiUrl),
         headers: {'access_token': getString},
         body: {'comment': review, 'rating': rating.toString()});
@@ -68,7 +69,7 @@ class _ReviewPageState extends State<ReviewPage> {
         builder: (context) {
           return AlertDialog(
             title: const Text('Review Failed'),
-            content: const Text('Already Give Review'),
+            content: const Text('You have been Give a Review'),
             actions: [
               TextButton(
                   onPressed: () {

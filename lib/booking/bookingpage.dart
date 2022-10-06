@@ -1,5 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_bali/mainpage.dart';
 import 'package:wisata_bali/widgets/buttonyellow.dart';
 import 'package:wisata_bali/widgets/packagetripcard.dart';
 
@@ -8,12 +13,14 @@ class BookingPage extends StatefulWidget {
   final String rating;
   final String price;
   final String image;
+  final String id;
   const BookingPage(
       {super.key,
       required this.title,
       required this.rating,
       required this.price,
-      required this.image});
+      required this.image,
+      required this.id});
 
   @override
   State<BookingPage> createState() => _BookingPageState();
@@ -46,11 +53,84 @@ class _BookingPageState extends State<BookingPage> {
     }
   }
 
+  startBooking(String date, String id, String amount) async {
+    var prefs = await SharedPreferences.getInstance();
+    var getString = prefs.getString('jwt');
+    const String apiUrl =
+        'https://api-bali-journey.herokuapp.com/users/payments/carts';
+    var response = await http.post(Uri.parse(apiUrl),
+        body: {'date': date, 'package_tripId': id, 'amount': amount},
+        headers: {'access_token': getString.toString()});
+    if (response.statusCode == 201) {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Booking Success'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (builder) => HomePage()),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
+    } else if (response.statusCode == 203) {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Booking Failed'),
+            content: const Text('Please choose another day'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
+    } else {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Booking Failed'),
+            content: const Text('Error Encountered when booking'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var pricing = currencyformatter.format(int.parse(widget.price));
     var total = index * int.parse(widget.price);
     var currencyTotal = currencyformatter.format(int.parse(total.toString()));
+    var datetime = '${selectedDate.toLocal()}'.split(' ')[0];
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -112,7 +192,7 @@ class _BookingPageState extends State<BookingPage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                           child: Text(
-                        "${selectedDate.toLocal()}".split(' ')[0],
+                        datetime,
                         style: const TextStyle(fontSize: 20),
                       )),
                     ),
@@ -156,10 +236,10 @@ class _BookingPageState extends State<BookingPage> {
                         InkWell(
                           onTap: () {
                             setState(() {
-                              if (index < 5) {
+                              if (index < 8) {
                                 index += 1;
                               } else {
-                                index = 5;
+                                index = 8;
                               }
                             });
                           },
@@ -206,7 +286,7 @@ class _BookingPageState extends State<BookingPage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "${selectedDate.toLocal()}".split(' ')[0],
+                            datetime,
                             style: const TextStyle(
                                 fontSize: 14, color: Color(0xff136068)),
                           ),
@@ -259,7 +339,12 @@ class _BookingPageState extends State<BookingPage> {
                 height: 40,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  // print(datetime);
+                  // print(widget.id);
+                  // print(index);
+                  startBooking(datetime, widget.id, index.toString());
+                },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: SizedBox(
