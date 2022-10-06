@@ -9,9 +9,10 @@ class CategoryWidgets extends StatelessWidget {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
-      width: 82,
+      width: 140,
       height: 36,
       alignment: Alignment.center,
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       decoration: BoxDecoration(
           color:
               isDarkTheme ? const Color(0xffD9F9F8) : const Color(0xffD9D9D9),

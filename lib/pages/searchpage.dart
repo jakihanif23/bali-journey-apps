@@ -36,7 +36,7 @@ class _SearchState extends State<Search> {
         throw Exception('Error');
       }
     } catch (e) {
-      throw Exception('KONTOL');
+      throw Exception('Error');
     }
   }
 

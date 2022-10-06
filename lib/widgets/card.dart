@@ -17,7 +17,8 @@ class CardWidgets extends StatelessWidget {
           color: const Color(0xffD9D9D9),
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-              image: NetworkImage('http://10.0.2.2:3000/$image'),
+              image:
+                  NetworkImage('https://api-bali-journey.herokuapp.com/$image'),
               fit: BoxFit.cover)),
       child: Stack(
         children: [
@@ -36,7 +37,7 @@ class CardWidgets extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.fmd_good,
-                          color: Colors.grey,
+                          color: Colors.white,
                         ),
                         const SizedBox(
                           width: 5,
@@ -45,7 +46,7 @@ class CardWidgets extends StatelessWidget {
                           address,
                           style: const TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Colors.grey,
+                              color: Colors.white,
                               fontSize: 13),
                         ),
                       ],

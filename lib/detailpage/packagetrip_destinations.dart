@@ -137,7 +137,7 @@ class _PackageTripDestinationsState extends State<PackageTripDestinations> {
                 );
               } else {
                 return const Center(
-                  child: Text('no Destinations'),
+                  child: CircularProgressIndicator(),
                 );
               }
             }),

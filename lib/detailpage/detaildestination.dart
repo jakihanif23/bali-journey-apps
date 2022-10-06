@@ -93,16 +93,24 @@ class _DetailDestinationState extends State<DetailDestination> {
                       ),
                       flexibleSpace: FlexibleSpaceBar(
                         title: Container(
-                          color: Colors.white.withOpacity(0.1),
-                          child: Text(
-                            name,
-                            style: TextStyle(
-                                color:
-                                    isDarkTheme ? Colors.white : Colors.black),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          width: 150,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                            child: Text(
+                              name,
+                              style: TextStyle(
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black),
+                            ),
                           ),
                         ),
                         background: Image.network(
-                          'http://10.0.2.2:3000/$image',
+                          'https://api-bali-journey.herokuapp.com/$image',
                           fit: BoxFit.fill,
                           width: double.infinity,
                         ),

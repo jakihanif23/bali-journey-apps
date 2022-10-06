@@ -20,9 +20,37 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
+  DateTime selectedDate = DateTime.now();
+  int index = 1;
   final currencyformatter = NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
+  bool _decideWhichDayToEnable(DateTime day) {
+    if ((day.isAfter(DateTime.now().subtract(const Duration(days: 1))) &&
+        day.isBefore(DateTime.now().add(const Duration(days: 8))))) {
+      return true;
+    }
+    return false;
+  }
+
+  __selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        helpText: 'Select Booking Date',
+        initialDate: selectedDate, // Refer step 1
+        firstDate: DateTime(2022),
+        lastDate: DateTime(2023),
+        selectableDayPredicate: _decideWhichDayToEnable);
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var pricing = currencyformatter.format(int.parse(widget.price));
+    var total = index * int.parse(widget.price);
+    var currencyTotal = currencyformatter.format(int.parse(total.toString()));
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,13 +99,20 @@ class _BookingPageState extends State<BookingPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    width: 200,
-                    height: 59,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Center(child: Text('INI ADALAH TANGGAL')),
+                  InkWell(
+                    onTap: () => __selectDate(context),
+                    child: Container(
+                      width: 200,
+                      height: 59,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                          child: Text(
+                        "${selectedDate.toLocal()}".split(' ')[0],
+                        style: const TextStyle(fontSize: 20),
+                      )),
+                    ),
                   ),
                   Container(
                     width: 150,
@@ -89,7 +124,15 @@ class _BookingPageState extends State<BookingPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              if (index > 1) {
+                                index -= 1;
+                              } else {
+                                index = 1;
+                              }
+                            });
+                          },
                           child: SizedBox(
                             height: MediaQuery.of(context).size.height,
                             width: 20,
@@ -103,12 +146,20 @@ class _BookingPageState extends State<BookingPage> {
                           ),
                         ),
                         const Icon(Icons.person),
-                        const Text(
-                          '2',
-                          style: TextStyle(fontSize: 20),
+                        Text(
+                          index.toString(),
+                          style: const TextStyle(fontSize: 20),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              if (index < 5) {
+                                index += 1;
+                              } else {
+                                index = 5;
+                              }
+                            });
+                          },
                           child: SizedBox(
                             width: 20,
                             height: MediaQuery.of(context).size.height,
@@ -151,9 +202,9 @@ class _BookingPageState extends State<BookingPage> {
                                 color: Color(0xff136068),
                                 fontWeight: FontWeight.bold),
                           ),
-                          const Text(
-                            'INI BUAT TANGGAL',
-                            style: TextStyle(
+                          Text(
+                            "${selectedDate.toLocal()}".split(' ')[0],
+                            style: const TextStyle(
                                 fontSize: 14, color: Color(0xff136068)),
                           ),
                         ],
@@ -184,12 +235,12 @@ class _BookingPageState extends State<BookingPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '2 Pax x ${currencyformatter.format(int.parse(widget.price))}/pax',
+                            '$index Pax x $pricing/pax',
                             style: const TextStyle(
                                 color: Color(0xff136068), fontSize: 16),
                           ),
                           Text(
-                            '${currencyformatter.format(int.parse(widget.price))}/pax',
+                            '$currencyTotal/pax',
                             style: const TextStyle(
                                 fontSize: 25,
                                 color: Color(0xff136068),

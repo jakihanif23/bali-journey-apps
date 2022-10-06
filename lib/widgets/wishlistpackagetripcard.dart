@@ -32,7 +32,8 @@ class WishlistPackageTripCard extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                    image: NetworkImage('http://10.0.2.2:3000/$image'),
+                    image: NetworkImage(
+                        'https://api-bali-journey.herokuapp.com/$image'),
                     fit: BoxFit.cover)),
           ),
           Expanded(

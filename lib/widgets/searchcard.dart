@@ -23,7 +23,7 @@ class SearchCard extends StatelessWidget {
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.all(15),
-      height: 133,
+      height: 150,
       width: 370,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +33,8 @@ class SearchCard extends StatelessWidget {
               width: 160,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage('http://10.0.2.2:3000/$image'),
+                      image: NetworkImage(
+                          'https://api-bali-journey.herokuapp.com/$image'),
                       fit: BoxFit.cover)),
             ),
           ),

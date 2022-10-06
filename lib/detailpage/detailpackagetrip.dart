@@ -48,7 +48,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
           var price = snapshot.data!.price;
           final currencyformatter =
               NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
-          var rating = snapshot.data!.rating;
+          var rating = double.parse(snapshot.data!.rating.toString());
           return Stack(
             children: [
               CustomScrollView(
@@ -68,14 +68,18 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                     ),
                     flexibleSpace: FlexibleSpaceBar(
                       title: Container(
-                        color: Colors.white.withOpacity(0.1),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        margin: const EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(5)),
                         child: Text(
                           name,
                           style: const TextStyle(color: Colors.black),
                         ),
                       ),
                       background: Image.network(
-                        'http://10.0.2.2:3000/${snapshot.data!.images[0].img.toString()}',
+                        'https://api-bali-journey.herokuapp.com/${snapshot.data!.images[0].img.toString()}',
                         fit: BoxFit.fill,
                         width: double.infinity,
                       ),
@@ -90,7 +94,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                           Container(
                               padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                               child: RatingBarIndicator(
-                                rating: double.parse(rating.toString()),
+                                rating: rating,
                                 itemCount: 5,
                                 itemSize: 30,
                                 itemBuilder: (context, index) => Icon(
@@ -100,6 +104,14 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                       : const Color(0xff136068),
                                 ),
                               )),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Rating ${rating.toString()}',
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
                           Container(
                             padding: const EdgeInsets.all(20.0),
                             child: Text(

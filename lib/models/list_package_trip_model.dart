@@ -109,7 +109,7 @@ class DestinationDestination {
   int id;
   String name;
   int categoryId;
-  int rating;
+  double rating;
   String description;
   String address;
   String openDay;
@@ -123,7 +123,7 @@ class DestinationDestination {
         id: json["id"],
         name: json["name"],
         categoryId: json["categoryId"],
-        rating: json["rating"],
+        rating: json["rating"].toDouble(),
         description: json["description"],
         address: json["address"],
         openDay: json["open_day"],
