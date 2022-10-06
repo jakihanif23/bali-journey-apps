@@ -17,7 +17,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   List<ListDestinationModel> listData = [];
   List<ListDestinationModel> listData2 = [];
-  String url = 'http://10.0.2.2:3000/home/allDestinations';
+  String url = 'https://api-bali-journey.herokuapp.com/home/allDestinations';
   static List<ListDestinationModel> parseAgents(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed

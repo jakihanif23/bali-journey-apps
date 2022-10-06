@@ -12,7 +12,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final String apiUrl = 'http://10.0.2.2:3000/home';
+  final String apiUrl = 'https://api-bali-journey.herokuapp.com/home';
   Future<HomeModel> listHome() async {
     var uri = Uri.parse(apiUrl);
     var response = await http.get(uri);

@@ -3,7 +3,7 @@ import 'package:wisata_bali/models/wishlist_destination_model.dart';
 import 'package:wisata_bali/models/wishlist_packagetrip_model.dart';
 
 class WishlistApi {
-  final String apiUrl = 'http://10.0.2.2:3000/users/wishlist';
+  final String apiUrl = 'https://api-bali-journey.herokuapp.com/users/wishlist';
   Future<List<WishlistDestination>> getListDestinations(String token) async {
     var client = http.Client();
     var uri = Uri.parse('$apiUrl/dest');

@@ -10,7 +10,7 @@ class dataaja extends StatefulWidget {
 }
 
 class _dataajaState extends State<dataaja> {
-  final String apiUrl = 'http://10.0.2.2:3000/home/category';
+  final String apiUrl = 'https://api-bali-journey.herokuapp.com/home/category';
   var myData;
 
   @override
