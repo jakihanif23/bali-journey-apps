@@ -146,6 +146,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -169,21 +171,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons.arrow_back_ios,
-                                  color: Colors.black,
+                                  color:
+                                      isDarkTheme ? Colors.white : Colors.black,
                                 ),
                               ),
                             ),
-                            const Center(
+                            Center(
                               child: Padding(
-                                padding: EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.only(top: 10),
                                 child: Text(
                                   'Edit Account',
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -215,14 +220,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                       width: 3,
-                                      color: const Color(0xff136068))),
-                              child: const Center(
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : const Color(0xff136068))),
+                              child: Center(
                                 child: Text(
                                   'Change Picture',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xff136068)),
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : const Color(0xff136068)),
                                 ),
                               ),
                             ),
@@ -237,11 +246,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Name',
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: Color(0xff136068),
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : const Color(0xff136068),
                                   fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
@@ -249,13 +260,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             TextField(
                               controller: _nameController,
-                              style: const TextStyle(color: Color(0xff136068)),
+                              style: TextStyle(
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : const Color(0xff136068)),
                               decoration: InputDecoration(
                                 fillColor: const Color(0xffD9F9F8),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xff136068))),
+                                    borderSide: BorderSide(
+                                        color: isDarkTheme
+                                            ? Colors.white
+                                            : const Color(0xff136068))),
                                 hintText: 'Name',
                               ),
                             )
@@ -270,11 +286,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Email',
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: Color(0xff136068),
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : const Color(0xff136068),
                                   fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
@@ -282,7 +300,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             TextField(
                               controller: _emailController,
-                              style: const TextStyle(color: Color(0xff136068)),
+                              style: TextStyle(
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : const Color(0xff136068)),
                               decoration: InputDecoration(
                                 fillColor: const Color(0xffD9F9F8),
                                 border: OutlineInputBorder(
@@ -303,11 +324,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Password',
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: Color(0xff136068),
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : const Color(0xff136068),
                                   fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
@@ -315,7 +338,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             TextField(
                               controller: _passwordController,
-                              style: const TextStyle(color: Color(0xff136068)),
+                              style: TextStyle(
+                                  color: isDarkTheme
+                                      ? Colors.white
+                                      : const Color(0xff136068)),
                               obscureText: true,
                               decoration: InputDecoration(
                                 fillColor: const Color(0xffD9F9F8),

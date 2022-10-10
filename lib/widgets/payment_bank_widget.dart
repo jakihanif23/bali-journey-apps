@@ -8,12 +8,15 @@ class PaymentBankWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.all(10),
       height: 100,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.black26),
+        border: Border.all(
+            width: 1, color: isDarkTheme ? Colors.white24 : Colors.black26),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -24,6 +27,9 @@ class PaymentBankWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(image), fit: BoxFit.fitWidth)),
+          ),
+          const SizedBox(
+            width: 30,
           ),
           Expanded(
             child: Center(

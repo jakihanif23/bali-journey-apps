@@ -131,6 +131,8 @@ class _BookingPageState extends State<BookingPage> {
     var total = index * int.parse(widget.price);
     var currencyTotal = currencyformatter.format(int.parse(total.toString()));
     var datetime = '${selectedDate.toLocal()}'.split(' ')[0];
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -138,7 +140,7 @@ class _BookingPageState extends State<BookingPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(15, 20, 20, 0),
                 child: Stack(
                   children: [
                     InkWell(
@@ -149,19 +151,21 @@ class _BookingPageState extends State<BookingPage> {
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.arrow_back_ios,
-                          color: Colors.black,
                         ),
                       ),
                     ),
                     Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          widget.title,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        alignment: Alignment.center,
+                        width: 280,
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            widget.title,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
@@ -188,7 +192,9 @@ class _BookingPageState extends State<BookingPage> {
                       width: 200,
                       height: 59,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1),
+                          border: Border.all(
+                              color: isDarkTheme ? Colors.white : Colors.black,
+                              width: 1),
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                           child: Text(
@@ -201,7 +207,9 @@ class _BookingPageState extends State<BookingPage> {
                     width: 150,
                     height: 59,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
+                        border: Border.all(
+                            color: isDarkTheme ? Colors.white : Colors.black,
+                            width: 1),
                         borderRadius: BorderRadius.circular(10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -267,7 +275,9 @@ class _BookingPageState extends State<BookingPage> {
                 height: 200,
                 width: 380,
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black),
+                    border: Border.all(
+                        width: 1,
+                        color: isDarkTheme ? Colors.white : Colors.black),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -280,37 +290,50 @@ class _BookingPageState extends State<BookingPage> {
                         children: [
                           Text(
                             widget.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 20,
-                                color: Color(0xff136068),
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068),
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
                             datetime,
-                            style: const TextStyle(
-                                fontSize: 14, color: Color(0xff136068)),
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Pickup Point',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xff136068),
+                              color: isDarkTheme
+                                  ? Colors.white
+                                  : const Color(0xff136068),
                             ),
                           ),
                           Text(
                             'Ngurah Rai Airport',
                             style: TextStyle(
-                                fontSize: 14, color: Color(0xff136068)),
+                                fontSize: 14,
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                           Text(
                             '10.00 WITA',
                             style: TextStyle(
-                                fontSize: 14, color: Color(0xff136068)),
+                                fontSize: 14,
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                         ],
                       ),
@@ -319,14 +342,19 @@ class _BookingPageState extends State<BookingPage> {
                         children: [
                           Text(
                             '$index Pax x $pricing/pax',
-                            style: const TextStyle(
-                                color: Color(0xff136068), fontSize: 16),
+                            style: TextStyle(
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068),
+                                fontSize: 16),
                           ),
                           Text(
                             '$currencyTotal/pax',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 25,
-                                color: Color(0xff136068),
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068),
                                 fontWeight: FontWeight.bold),
                           )
                         ],

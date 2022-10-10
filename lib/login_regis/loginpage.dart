@@ -48,9 +48,11 @@ class _LoginPageState extends State<LoginPage> {
             actions: [
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        CupertinoPageRoute(builder: (builder) => HomePage()),
-                        (Route<dynamic> route) => false);
+                    Navigator.of(context, rootNavigator: true)
+                        .pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                                builder: (builder) => HomePage()),
+                            (Route<dynamic> route) => false);
                   },
                   child: const Text('OK'))
             ],

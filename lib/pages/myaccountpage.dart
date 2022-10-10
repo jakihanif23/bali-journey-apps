@@ -48,6 +48,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -68,21 +70,24 @@ class _MyAccountPageState extends State<MyAccountPage> {
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons.arrow_back_ios,
-                                  color: Colors.black,
+                                  color:
+                                      isDarkTheme ? Colors.white : Colors.black,
                                 ),
                               ),
                             ),
-                            const Center(
+                            Center(
                               child: Padding(
-                                padding: EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.only(top: 10),
                                 child: Text(
                                   'My Account',
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -130,12 +135,16 @@ class _MyAccountPageState extends State<MyAccountPage> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   border: Border.all(
-                                      color: const Color(0xff136068),
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : const Color(0xff136068),
                                       width: 3)),
-                              child: const Text(
+                              child: Text(
                                 'Edit Profile',
                                 style: TextStyle(
-                                    color: Color(0xff136068),
+                                    color: isDarkTheme
+                                        ? Colors.white
+                                        : const Color(0xff136068),
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600),
                               ),

@@ -105,6 +105,8 @@ class _ReviewPageState extends State<ReviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -127,7 +129,6 @@ class _ReviewPageState extends State<ReviewPage> {
                               padding: EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.arrow_back_ios,
-                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -137,9 +138,7 @@ class _ReviewPageState extends State<ReviewPage> {
                               child: Text(
                                 'Give Review',
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -161,11 +160,13 @@ class _ReviewPageState extends State<ReviewPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text(
+                      Text(
                         'Review',
                         style: TextStyle(
                             fontSize: 20,
-                            color: Color(0xff136068),
+                            color: isDarkTheme
+                                ? Colors.white
+                                : const Color(0xff136068),
                             fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
@@ -173,7 +174,10 @@ class _ReviewPageState extends State<ReviewPage> {
                       ),
                       TextField(
                         controller: _reviewController,
-                        style: const TextStyle(color: Color(0xff136068)),
+                        style: TextStyle(
+                            color: isDarkTheme
+                                ? Colors.white
+                                : const Color(0xff136068)),
                         decoration: InputDecoration(
                           fillColor: const Color(0xffD9F9F8),
                           border: OutlineInputBorder(

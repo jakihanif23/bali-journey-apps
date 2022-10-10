@@ -19,6 +19,8 @@ class AccountPageLoggedIn extends StatefulWidget {
 class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -32,7 +34,10 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                   'Account',
                   style: GoogleFonts.salsa(
                       fontSize: 36,
-                      textStyle: const TextStyle(color: Color(0xff136068))),
+                      textStyle: TextStyle(
+                          color: isDarkTheme
+                              ? Colors.white
+                              : const Color(0xff136068))),
                 ),
               ),
               const SizedBox(
@@ -47,10 +52,15 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 child: Container(
                     height: 90,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         border: Border(
-                            top: BorderSide(color: Colors.black),
-                            bottom: BorderSide(color: Colors.black))),
+                            top: BorderSide(
+                                color:
+                                    isDarkTheme ? Colors.white : Colors.black),
+                            bottom: BorderSide(
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -61,14 +71,18 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                             style: GoogleFonts.lato(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xff136068)),
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                           child: SvgPicture.asset(
                             'assets/arrow_top_right.svg',
-                            color: const Color(0xff136068),
+                            color: isDarkTheme
+                                ? Colors.white
+                                : const Color(0xff136068),
                           ),
                         )
                       ],
@@ -87,10 +101,15 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 child: Container(
                     height: 90,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         border: Border(
-                            top: BorderSide(color: Colors.black),
-                            bottom: BorderSide(color: Colors.black))),
+                            top: BorderSide(
+                                color:
+                                    isDarkTheme ? Colors.white : Colors.black),
+                            bottom: BorderSide(
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -101,14 +120,18 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                             style: GoogleFonts.lato(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xff136068)),
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                           child: SvgPicture.asset(
                             'assets/arrow_top_right.svg',
-                            color: const Color(0xff136068),
+                            color: isDarkTheme
+                                ? Colors.white
+                                : const Color(0xff136068),
                           ),
                         )
                       ],
@@ -126,10 +149,15 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 child: Container(
                     height: 90,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         border: Border(
-                            top: BorderSide(color: Colors.black),
-                            bottom: BorderSide(color: Colors.black))),
+                            top: BorderSide(
+                                color:
+                                    isDarkTheme ? Colors.white : Colors.black),
+                            bottom: BorderSide(
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -140,14 +168,18 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                             style: GoogleFonts.lato(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xff136068)),
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                           child: SvgPicture.asset(
                             'assets/arrow_top_right.svg',
-                            color: const Color(0xff136068),
+                            color: isDarkTheme
+                                ? Colors.white
+                                : const Color(0xff136068),
                           ),
                         )
                       ],
@@ -159,7 +191,10 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                   'Support',
                   style: GoogleFonts.salsa(
                       fontSize: 36,
-                      textStyle: const TextStyle(color: Color(0xff136068))),
+                      textStyle: TextStyle(
+                          color: isDarkTheme
+                              ? Colors.white
+                              : const Color(0xff136068))),
                 ),
               ),
               const SizedBox(
@@ -173,10 +208,15 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                 child: Container(
                     height: 90,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         border: Border(
-                            top: BorderSide(color: Colors.black),
-                            bottom: BorderSide(color: Colors.black))),
+                            top: BorderSide(
+                                color:
+                                    isDarkTheme ? Colors.white : Colors.black),
+                            bottom: BorderSide(
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -187,14 +227,18 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                             style: GoogleFonts.lato(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xff136068)),
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                           child: SvgPicture.asset(
                             'assets/arrow_top_right.svg',
-                            color: const Color(0xff136068),
+                            color: isDarkTheme
+                                ? Colors.white
+                                : const Color(0xff136068),
                           ),
                         )
                       ],

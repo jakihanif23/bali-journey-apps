@@ -55,7 +55,6 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
               CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    backgroundColor: Colors.white,
                     pinned: true,
                     expandedHeight: 380,
                     leading: InkWell(
@@ -64,19 +63,18 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                       },
                       child: const Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.black,
                       ),
                     ),
                     flexibleSpace: FlexibleSpaceBar(
                       title: Container(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        margin: const EdgeInsets.only(right: 10),
                         decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.6),
+                            color: isDarkTheme
+                                ? Colors.black12
+                                : Colors.white.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(
                           name,
-                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                       background: Image.network(
@@ -98,11 +96,9 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                 rating: rating,
                                 itemCount: 5,
                                 itemSize: 30,
-                                itemBuilder: (context, index) => Icon(
+                                itemBuilder: (context, index) => const Icon(
                                   Icons.star,
-                                  color: isDarkTheme
-                                      ? Colors.white
-                                      : const Color(0xff136068),
+                                  color: Colors.amber,
                                 ),
                               )),
                           const SizedBox(

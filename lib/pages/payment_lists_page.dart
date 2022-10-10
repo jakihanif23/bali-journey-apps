@@ -93,6 +93,8 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     final currencyformatter =
         NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
     return Scaffold(
@@ -100,33 +102,33 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.black,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 16, 0, 0),
+                child: Stack(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                        ),
                       ),
                     ),
-                  ),
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Text(
-                        'Payment Lists',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Payment Lists',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -153,8 +155,11 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                           margin: const EdgeInsets.all(10),
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 1, color: Colors.black12),
+                              border: Border.all(
+                                  width: 1,
+                                  color: isDarkTheme
+                                      ? Colors.white.withOpacity(0.14)
+                                      : Colors.black12),
                               borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             children: [
@@ -206,7 +211,10 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 1,
-                                                color: Colors.black12),
+                                                color: isDarkTheme
+                                                    ? Colors.white
+                                                        .withOpacity(0.14)
+                                                    : Colors.black12),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Column(
@@ -250,13 +258,16 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                                                                   right: 10),
                                                           child: Text(
                                                             title,
-                                                            style: const TextStyle(
+                                                            style: TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
                                                                 fontSize: 20,
-                                                                color: Color(
-                                                                    0xff136068)),
+                                                                color: isDarkTheme
+                                                                    ? Colors
+                                                                        .white
+                                                                    : const Color(
+                                                                        0xff136068)),
                                                           ),
                                                         ),
                                                         const SizedBox(
@@ -266,10 +277,13 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                                                           child: Text(
                                                             '${date.toLocal()}'
                                                                 .split(' ')[0],
-                                                            style: const TextStyle(
+                                                            style: TextStyle(
                                                                 fontSize: 15,
-                                                                color: Color(
-                                                                    0xff136068)),
+                                                                color: isDarkTheme
+                                                                    ? Colors
+                                                                        .white
+                                                                    : const Color(
+                                                                        0xff136068)),
                                                           ),
                                                         ),
                                                         const SizedBox(
@@ -282,9 +296,12 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                                                                   .centerLeft,
                                                               child: Text(
                                                                 '$amount pax x ${currencyformatter.format(int.parse(price))}',
-                                                                style: const TextStyle(
-                                                                    color: Color(
-                                                                        0xff136068),
+                                                                style: TextStyle(
+                                                                    color: isDarkTheme
+                                                                        ? Colors
+                                                                            .white
+                                                                        : const Color(
+                                                                            0xff136068),
                                                                     fontSize:
                                                                         12,
                                                                     fontWeight:
@@ -299,9 +316,12 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                                                                 currencyformatter
                                                                     .format(
                                                                         total),
-                                                                style: const TextStyle(
-                                                                    color: Color(
-                                                                        0xff136068),
+                                                                style: TextStyle(
+                                                                    color: isDarkTheme
+                                                                        ? Colors
+                                                                            .white
+                                                                        : const Color(
+                                                                            0xff136068),
                                                                     fontSize:
                                                                         18,
                                                                     fontWeight:
@@ -360,10 +380,12 @@ class _PaymentListsPageState extends State<PaymentListsPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Total',
                                           style: TextStyle(
-                                              color: Color(0xff136068)),
+                                              color: isDarkTheme
+                                                  ? Colors.white
+                                                  : const Color(0xff136068)),
                                         ),
                                         Text(
                                           currencyformatter

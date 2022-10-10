@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -117,21 +118,39 @@ class _HomeState extends State<Home> {
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(CupertinoPageRoute(
-                                      builder: (context) =>
-                                          const AccountPageLoggedIn()));
-                                },
-                                child: Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 20, 20, 0),
-                                  child: CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: NetworkImage(
-                                        'https://api-bali-journey.herokuapp.com/${snapshot.data!.img}'),
-                                  ),
-                                ),
-                              );
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        CupertinoPageRoute(
+                                            builder: (context) =>
+                                                const AccountPageLoggedIn()));
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          'https://api-bali-journey.herokuapp.com/${snapshot.data!.img}',
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.fill),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) => Container(
+                                        height: 60,
+                                        width: 60,
+                                        alignment: Alignment.center,
+                                        child: Image.asset('assets/man.jpg'),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset('assets/man.jpg'),
+                                    ),
+                                  ));
                             }
                             return InkWell(
                               onTap: () {
@@ -160,7 +179,7 @@ class _HomeState extends State<Home> {
                               backgroundImage: AssetImage('assets/man.jpg'),
                             ),
                           ),
-                        )
+                        ),
                 ],
               ),
             ),

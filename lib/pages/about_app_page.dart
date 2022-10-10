@@ -26,7 +26,6 @@ class _AboutAppPageState extends State<AboutAppPage> {
                       padding: EdgeInsets.all(8.0),
                       child: Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -36,9 +35,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                       child: Text(
                         'About App',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

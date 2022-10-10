@@ -211,6 +211,8 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
         body: SingleChildScrollView(
       child: Visibility(
@@ -253,12 +255,14 @@ class _CartPageState extends State<CartPage> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                const Text(
+                                Text(
                                   'Transaction Cart',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xff136068)),
+                                      color: isDarkTheme
+                                          ? Colors.white
+                                          : const Color(0xff136068)),
                                 ),
                                 const SizedBox(
                                   height: 10,
@@ -292,8 +296,9 @@ class _CartPageState extends State<CartPage> {
                                                   decoration: BoxDecoration(
                                                       border: Border.all(
                                                           width: 1,
-                                                          color:
-                                                              Colors.black12),
+                                                          color: isDarkTheme
+                                                              ? Colors.white24
+                                                              : Colors.black12),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10)),
@@ -346,13 +351,14 @@ class _CartPageState extends State<CartPage> {
                                                                             10),
                                                                     child: Text(
                                                                       title,
-                                                                      style: const TextStyle(
+                                                                      style: TextStyle(
                                                                           fontWeight: FontWeight
                                                                               .bold,
                                                                           fontSize:
                                                                               20,
-                                                                          color:
-                                                                              Color(0xff136068)),
+                                                                          color: isDarkTheme
+                                                                              ? Colors.white
+                                                                              : const Color(0xff136068)),
                                                                     ),
                                                                   ),
                                                                   const SizedBox(
@@ -363,11 +369,12 @@ class _CartPageState extends State<CartPage> {
                                                                       '${date.toLocal()}'
                                                                           .split(
                                                                               ' ')[0],
-                                                                      style: const TextStyle(
+                                                                      style: TextStyle(
                                                                           fontSize:
                                                                               15,
-                                                                          color:
-                                                                              Color(0xff136068)),
+                                                                          color: isDarkTheme
+                                                                              ? Colors.white
+                                                                              : const Color(0xff136068)),
                                                                     ),
                                                                   ),
                                                                   const SizedBox(
@@ -381,8 +388,8 @@ class _CartPageState extends State<CartPage> {
                                                                         child:
                                                                             Text(
                                                                           '$amount pax x ${currencyformatter.format(int.parse(price))}',
-                                                                          style: const TextStyle(
-                                                                              color: Color(0xff136068),
+                                                                          style: TextStyle(
+                                                                              color: isDarkTheme ? Colors.white : const Color(0xff136068),
                                                                               fontSize: 12,
                                                                               fontWeight: FontWeight.w100),
                                                                         ),
@@ -394,8 +401,8 @@ class _CartPageState extends State<CartPage> {
                                                                             Text(
                                                                           currencyformatter
                                                                               .format(total),
-                                                                          style: const TextStyle(
-                                                                              color: Color(0xff136068),
+                                                                          style: TextStyle(
+                                                                              color: isDarkTheme ? Colors.white : const Color(0xff136068),
                                                                               fontSize: 18,
                                                                               fontWeight: FontWeight.w100),
                                                                         ),

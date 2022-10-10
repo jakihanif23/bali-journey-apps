@@ -78,35 +78,26 @@ class _DetailDestinationState extends State<DetailDestination> {
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
-                      backgroundColor:
-                          isDarkTheme ? Colors.black87 : Colors.white,
                       pinned: true,
                       expandedHeight: 380,
                       leading: InkWell(
                         onTap: () {
                           Navigator.of(context).pop();
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back_ios,
-                          color: isDarkTheme ? Colors.grey : Colors.black,
                         ),
                       ),
                       flexibleSpace: FlexibleSpaceBar(
                         title: Container(
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          width: 150,
-                          height: 30,
                           decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.6),
+                              color: isDarkTheme
+                                  ? Colors.black12
+                                  : Colors.white.withOpacity(0.6),
                               borderRadius: BorderRadius.circular(5)),
-                          child: Center(
-                            child: Text(
-                              name,
-                              style: TextStyle(
-                                  color: isDarkTheme
-                                      ? Colors.white
-                                      : Colors.black),
-                            ),
+                          child: Text(
+                            name,
                           ),
                         ),
                         background: Image.network(
@@ -126,11 +117,9 @@ class _DetailDestinationState extends State<DetailDestination> {
                                 rating: double.parse(rating.toString()),
                                 itemCount: 5,
                                 itemSize: 30,
-                                itemBuilder: (context, index) => Icon(
+                                itemBuilder: (context, index) => const Icon(
                                   Icons.star,
-                                  color: isDarkTheme
-                                      ? Colors.white
-                                      : const Color(0xff136068),
+                                  color: Colors.amber,
                                 ),
                               )),
                           const SizedBox(
@@ -152,10 +141,18 @@ class _DetailDestinationState extends State<DetailDestination> {
                             ),
                           ),
                           Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                                 border: Border(
-                                    top: BorderSide(width: 2),
-                                    bottom: BorderSide(width: 2))),
+                                    top: BorderSide(
+                                        width: 2,
+                                        color: isDarkTheme
+                                            ? Colors.white
+                                            : Colors.black),
+                                    bottom: BorderSide(
+                                        width: 2,
+                                        color: isDarkTheme
+                                            ? Colors.white
+                                            : Colors.black))),
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.all(20.0),

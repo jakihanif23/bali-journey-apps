@@ -40,10 +40,13 @@ class _HomePageState extends State<HomePage> {
           scaffold: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: const Color(0xff136068),
+              selectedItemColor: isDarkTheme
+                  ? const Color(0xffD9F9F8)
+                  : const Color(0xff136068),
               selectedFontSize: 10,
               unselectedFontSize: 10,
-              unselectedItemColor: Colors.grey,
+              unselectedItemColor:
+                  isDarkTheme ? const Color(0xff136068) : Colors.grey,
               currentIndex: current,
               backgroundColor:
                   isDarkTheme ? Colors.black26 : const Color(0xfff5f4f4),
