@@ -31,23 +31,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return prefs.getString('jwt').toString();
   }
 
-  Future<void> updateImage(String token, File data) async {
-    final uri = Uri.parse('http://10.0.2.2:3000/users/profile/img');
-    var stream = http.ByteStream(imageFile!.openRead());
-    stream.cast();
-    var length = await imageFile!.length();
-    var request = http.MultipartRequest('PUT', uri);
-    request.headers['access_token'] = token;
-    request.files.add(await http.MultipartFile.fromPath('img', imageFile!.path,
-        contentType: MediaType('image', p.extension(imageFile!.path))));
-    var response = await request.send();
-    if (response.statusCode == 201) {
-      print('success');
-    } else {
-      print(response.statusCode);
-    }
-  }
-
   updateProfile(String name, String email, String password, String token,
       String filepath) async {
     final payload = {'name': name, 'email': email, 'password': password};
@@ -79,26 +62,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
           },
         );
       } else {
-        showAnimatedDialog(
-          context: context,
-          barrierDismissible: true,
-          animationType: DialogTransitionType.slideFromBottomFade,
-          curve: Curves.ease,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Update Successful'),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          CupertinoPageRoute(builder: (builder) => HomePage()),
-                          (Route<dynamic> route) => false);
-                    },
-                    child: const Text('OK'))
-              ],
-            );
-          },
-        );
+        final uri = Uri.parse('http://10.0.2.2:3000/users/profile/img');
+        var stream = http.ByteStream(imageFile!.openRead());
+        stream.cast();
+        var length = await imageFile!.length();
+        var request = http.MultipartRequest('PUT', uri);
+        request.headers['access_token'] = token;
+        request.files.add(await http.MultipartFile.fromPath(
+            'img', imageFile!.path,
+            contentType: MediaType('image', p.extension(imageFile!.path))));
+        var response = await request.send();
+        if (response.statusCode == 201) {
+          showAnimatedDialog(
+            context: context,
+            barrierDismissible: true,
+            animationType: DialogTransitionType.slideFromBottomFade,
+            curve: Curves.ease,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Update Successful'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                                builder: (builder) => HomePage()),
+                            (Route<dynamic> route) => false);
+                      },
+                      child: const Text('OK'))
+                ],
+              );
+            },
+          );
+          print('success');
+        } else {
+          print(response.statusCode);
+        }
       }
     } else {
       showAnimatedDialog(
@@ -422,9 +421,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             var password = _passwordController.text;
                             final prefs = await SharedPreferences.getInstance();
                             String token = prefs.getString('jwt') ?? '';
-                            // updateProfile(
-                            //     name, email, password, token, imageFile!.path);
-                            updateImage(token, imageFile!);
+                            updateProfile(
+                                name, email, password, token, imageFile!.path);
+                            // updateImage(token, imageFile!);
                           },
                           child: Container(
                             height: 42,

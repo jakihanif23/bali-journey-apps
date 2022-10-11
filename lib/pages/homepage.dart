@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Find Your',
+                          'Bali Journey',
                           style: GoogleFonts.salsa(
                               fontSize: 36,
                               textStyle: TextStyle(
@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
                                       : const Color(0xff136068))),
                         ),
                         Text(
-                          'Destination',
+                          'Apps',
                           style: GoogleFonts.salsa(
                               fontSize: 36,
                               textStyle: TextStyle(

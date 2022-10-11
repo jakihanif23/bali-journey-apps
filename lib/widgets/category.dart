@@ -15,12 +15,14 @@ class CategoryWidgets extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       decoration: BoxDecoration(
           color:
-              isDarkTheme ? const Color(0xffD9F9F8) : const Color(0xffD9D9D9),
+              isDarkTheme ? const Color(0xffD9F9F8) : const Color(0xff136068),
           borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: Text(
         text!,
         style: GoogleFonts.lato(
-            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: isDarkTheme ? Colors.black : Colors.white),
       ),
     );
   }
