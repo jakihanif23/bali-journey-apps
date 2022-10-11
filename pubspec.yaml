@@ -46,6 +46,7 @@ dependencies:
   flutter_animated_dialog: ^2.0.1
   cached_network_image: ^3.2.2
   image_picker: ^0.8.6
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:

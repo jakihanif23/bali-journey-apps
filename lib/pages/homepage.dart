@@ -127,7 +127,7 @@ class _HomeState extends State<Home> {
                                   },
                                   child: Padding(
                                     padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                                        const EdgeInsets.fromLTRB(0, 10, 20, 0),
                                     child: CachedNetworkImage(
                                       imageUrl:
                                           'https://api-bali-journey.herokuapp.com/${snapshot.data!.img}',
