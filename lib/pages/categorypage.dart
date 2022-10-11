@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/listapi.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
+import 'package:wisata_bali/detailpage/detaildestination_user.dart';
 import 'package:wisata_bali/models/list_destination_model.dart';
 import 'package:wisata_bali/widgets/card.dart';
 
@@ -18,6 +20,30 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   List<ListDestinationModel>? listDestinations;
+  var loginChecker = false;
+  checkLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('jwt') == null) {
+      print('user null');
+    } else {
+      setState(() {
+        loginChecker = true;
+      });
+      String data = prefs.getString('jwt') ?? '';
+      // Map<String, dynamic> payload = Jwt.parseJwt(data);
+      // // print(prefs.getString('jwt'));
+      // var id = payload['id'];
+      // const String apiUrl = 'http://10.0.2.2:3000/users/profile';
+      // final response = await http.get(Uri.parse(apiUrl), headers: {
+      //   'access_token': '${prefs.getString('jwt')}',
+      // });
+      // print(response.body);
+      // print(payload);
+      print(loginChecker);
+    }
+    print(prefs.getString('jwt'));
+  }
+
   var isLoaded = false;
   getAllData() async {
     listDestinations =
@@ -33,6 +59,7 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     super.initState();
+    checkLogin();
     getAllData();
   }
 
@@ -103,21 +130,31 @@ class _CategoryPageState extends State<CategoryPage> {
                                         child: InkWell(
                                           onTap: () {
                                             print(listDestinations![index].id);
-                                            Navigator.of(context).push(
-                                                CupertinoPageRoute(
-                                                    builder: (context) =>
-                                                        DetailDestination(
-                                                          destinationId:
-                                                              listDestinations![
-                                                                      index]
-                                                                  .id,
-                                                        )));
+                                            loginChecker
+                                                ? Navigator.of(context).push(
+                                                    CupertinoPageRoute(
+                                                        builder: (context) =>
+                                                            DetailDestinationUser(
+                                                              destinationId:
+                                                                  listDestinations![
+                                                                          index]
+                                                                      .id,
+                                                            )))
+                                                : Navigator.of(context).push(
+                                                    CupertinoPageRoute(
+                                                        builder: (context) =>
+                                                            DetailDestination(
+                                                              destinationId:
+                                                                  listDestinations![
+                                                                          index]
+                                                                      .id,
+                                                            )));
                                           },
                                           child: CardWidgets(
                                               listDestinations![index]
                                                   .images[0]
                                                   .img,
-                                              listDestinations![index].address),
+                                              listDestinations![index].name),
                                         ),
                                       );
                               },
@@ -160,18 +197,29 @@ class _CategoryPageState extends State<CategoryPage> {
                                       const EdgeInsets.fromLTRB(0, 0, 20, 0),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                          CupertinoPageRoute(
-                                              builder: (context) =>
-                                                  DetailDestination(
-                                                    destinationId:
-                                                        listDestinations![index]
-                                                            .id,
-                                                  )));
+                                      loginChecker
+                                          ? Navigator.of(context).push(
+                                              CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      DetailDestinationUser(
+                                                        destinationId:
+                                                            listDestinations![
+                                                                    index]
+                                                                .id,
+                                                      )))
+                                          : Navigator.of(context).push(
+                                              CupertinoPageRoute(
+                                                  builder: (context) =>
+                                                      DetailDestination(
+                                                        destinationId:
+                                                            listDestinations![
+                                                                    index]
+                                                                .id,
+                                                      )));
                                     },
                                     child: CardWidgets(
                                         listDestinations![index].images[0].img,
-                                        listDestinations![index].address),
+                                        listDestinations![index].name),
                                   ),
                                 );
                               },

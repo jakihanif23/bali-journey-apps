@@ -31,6 +31,7 @@ class CardWidgets extends StatelessWidget {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
                           child: Container(
+                            color: Colors.black.withOpacity(0.6),
                             height: 30,
                             padding: const EdgeInsets.only(left: 5, right: 8),
                             alignment: Alignment.centerLeft,

@@ -3,28 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wisata_bali/apiservices/homeapi.dart';
 import 'package:wisata_bali/detailpage/review_page.dart';
 import 'package:wisata_bali/icons/custom_icons_icons.dart';
-import 'package:wisata_bali/models/destination_model.dart';
+import 'package:wisata_bali/models/detail_destinations_user_model.dart';
 import 'package:wisata_bali/widgets/destinationreviewscard.dart';
-import 'package:wisata_bali/widgets/givereviewsbutton.dart';
 
-class DetailDestination extends StatefulWidget {
+import '../apiservices/userapi.dart';
+import '../widgets/givereviewsbutton.dart';
+
+class DetailDestinationUser extends StatefulWidget {
   final int destinationId;
-
-  const DetailDestination({
-    Key? key,
-    required this.destinationId,
-  }) : super(key: key);
+  const DetailDestinationUser({super.key, required this.destinationId});
 
   @override
-  State<DetailDestination> createState() => _DetailDestinationState();
+  State<DetailDestinationUser> createState() => _DetailDestinationUserState();
 }
 
-class _DetailDestinationState extends State<DetailDestination> {
-  late Future<DestinationModel> futureDestination;
+class _DetailDestinationUserState extends State<DetailDestinationUser> {
+  Future<DetailDestinationUserModel>? futureDestination;
   var loginChecker = false;
   checkLogin() async {
     final prefs = await SharedPreferences.getInstance();
@@ -35,27 +33,32 @@ class _DetailDestinationState extends State<DetailDestination> {
         loginChecker = true;
       });
       String data = prefs.getString('jwt') ?? '';
-
-      print(loginChecker);
+      futureDestination = UserApi().getDestination(widget.destinationId);
+      // Map<String, dynamic> payload = Jwt.parseJwt(data);
+      // // print(prefs.getString('jwt'));
+      // var id = payload['id'];
+      // const String apiUrl = 'http://10.0.2.2:3000/users/profile';
+      // final response = await http.get(Uri.parse(apiUrl), headers: {
+      //   'access_token': '${prefs.getString('jwt')}',
+      // });
+      // print(response.body);
+      // print(payload);
+      // print(loginChecker);
     }
   }
 
   @override
   void initState() {
-    super.initState();
     checkLogin();
-    futureDestination = HomeApi().getDataDestination(widget.destinationId);
+    super.initState();
   }
-
-  final TextEditingController _reviewController = TextEditingController();
-  double ratingIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
-        body: FutureBuilder<DestinationModel>(
+        body: FutureBuilder<DetailDestinationUserModel>(
             future: futureDestination,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -70,6 +73,28 @@ class _DetailDestinationState extends State<DetailDestination> {
                 var image = snapshot.data!.images[0].img;
                 var reviews = snapshot.data!.reviews;
                 var mapLink = snapshot.data!.mapLink;
+                var isWishlist = snapshot.data!.isWishlist;
+                var idWish = snapshot.data!.idWishlist;
+                bool changeColor = isWishlist;
+                addWishList(int id) async {
+                  final prefs = await SharedPreferences.getInstance();
+                  var jwt = prefs.getString('jwt');
+                  const String url =
+                      'https://api-bali-journey.herokuapp.com/users/wishlist/dest';
+                  await http.post(Uri.parse('$url/$id'),
+                      headers: {'access_token': jwt.toString()});
+                }
+
+                deleteWishList(int id) async {
+                  final prefs = await SharedPreferences.getInstance();
+                  var jwt = prefs.getString('jwt');
+                  const String url =
+                      'https://api-bali-journey.herokuapp.com/users/wishlist';
+                  await http.delete(Uri.parse('$url/$id'),
+                      headers: {'access_token': jwt.toString()});
+                }
+
+                // print(isWishlist);
                 return Stack(
                   children: [
                     CustomScrollView(
@@ -293,26 +318,53 @@ class _DetailDestinationState extends State<DetailDestination> {
                         right: 20,
                         child: InkWell(
                           onTap: () {
-                            showAnimatedDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              animationType:
-                                  DialogTransitionType.slideFromBottomFade,
-                              curve: Curves.ease,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Add Wishlist Failed'),
-                                  content: const Text('You have to Logged in'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('OK'))
-                                  ],
-                                );
-                              },
-                            );
+                            if (isWishlist == true) {
+                              deleteWishList(idWish);
+                              showAnimatedDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                animationType:
+                                    DialogTransitionType.slideFromBottomFade,
+                                curve: Curves.ease,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('Delete Wishlist'),
+                                    content: Text(
+                                        'Succes Delete $name from Wishlist'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('OK'))
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              addWishList(id);
+                              showAnimatedDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                animationType:
+                                    DialogTransitionType.slideFromBottomFade,
+                                curve: Curves.ease,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('Add Wishlist'),
+                                    content:
+                                        Text('Succes Add $name to Wishlist'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('OK'))
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           },
                           child: Container(
                               height: 60,
@@ -320,12 +372,18 @@ class _DetailDestinationState extends State<DetailDestination> {
                               decoration: const BoxDecoration(
                                   color: Color(0xffEDEDED),
                                   shape: BoxShape.circle),
-                              child: const Icon(
+                              child: Icon(
                                 CustomIcons.heart,
-                                size: 30,
+                                color: isWishlist
+                                    ? const Color(0xffE26868)
+                                    : Colors.black,
                               )),
                         ))
                   ],
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text('No Data'),
                 );
               } else {
                 return const Center(

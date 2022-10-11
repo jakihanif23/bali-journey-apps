@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/listapi.dart';
+import 'package:wisata_bali/detailpage/detail_packagetrip_user.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/list_package_trip_model.dart';
 import 'package:wisata_bali/widgets/packagetripcard.dart';
@@ -15,6 +17,21 @@ class PackageTrip extends StatefulWidget {
 
 class _PackageTripState extends State<PackageTrip> {
   List<ListPackageTripModel>? listAllPackageTrips;
+  var loginChecker = false;
+  checkLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('jwt') == null) {
+      print('user null');
+    } else {
+      setState(() {
+        loginChecker = true;
+      });
+      String data = prefs.getString('jwt') ?? '';
+      print(loginChecker);
+    }
+    print(prefs.getString('jwt'));
+  }
+
   var isLoaded = false;
   getAllData() async {
     listAllPackageTrips = await ListApi().listAllPackageTrip();
@@ -26,6 +43,7 @@ class _PackageTripState extends State<PackageTrip> {
   @override
   void initState() {
     super.initState();
+    checkLogin();
     getAllData();
   }
 
@@ -86,11 +104,17 @@ class _PackageTripState extends State<PackageTrip> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Navigator.of(context).push(CupertinoPageRoute(
-                              builder: (_) => DetailPackageTrip(
-                                    packageTripId:
-                                        listAllPackageTrips![index].id,
-                                  )));
+                          loginChecker
+                              ? Navigator.of(context).push(CupertinoPageRoute(
+                                  builder: (_) => DetailPackageTripUser(
+                                        packageTripId:
+                                            listAllPackageTrips![index].id,
+                                      )))
+                              : Navigator.of(context).push(CupertinoPageRoute(
+                                  builder: (_) => DetailPackageTrip(
+                                        packageTripId:
+                                            listAllPackageTrips![index].id,
+                                      )));
                         },
                         child: PackageTripCard(
                             listAllPackageTrips![index].name,

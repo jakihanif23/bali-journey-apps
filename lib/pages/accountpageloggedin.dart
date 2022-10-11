@@ -246,7 +246,7 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
               ),
               Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                   child: InkWell(
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
@@ -254,7 +254,10 @@ class _AccountPageLoggedInState extends State<AccountPageLoggedIn> {
                       Navigator.pushReplacementNamed(context, '/');
                     },
                     child: LoginButton('Logout'),
-                  ))
+                  )),
+              const SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),

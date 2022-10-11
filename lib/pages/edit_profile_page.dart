@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/mainpage.dart';
 import 'package:wisata_bali/models/profile_model.dart';
@@ -144,6 +147,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
   }
 
+  File? imageFile;
+  Future getImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    imageFile = File(pickedFile!.path);
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
@@ -212,7 +222,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              getImage();
+                            },
                             child: Container(
                               height: 58,
                               width: 200,

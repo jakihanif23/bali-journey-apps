@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/paymentapi.dart';
 import 'package:wisata_bali/models/list_payment_history_model.dart';
+import 'package:wisata_bali/widgets/review_button_transaction.dart';
 
 class ListTransactionHistoryPage extends StatefulWidget {
   const ListTransactionHistoryPage({super.key});
@@ -47,6 +47,8 @@ class _ListTransactionHistoryPageState
       body: SingleChildScrollView(
         child: SafeArea(
           child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
                 Padding(
@@ -77,20 +79,21 @@ class _ListTransactionHistoryPageState
                     ],
                   ),
                 ),
-                SizedBox(
-                  child: Visibility(
-                      visible: isLoaded,
-                      replacement:
-                          const Center(child: Text('No Transaction History')),
-                      child: Column(
-                        children: List.generate(listPaymentHistory?.length ?? 0,
-                            (index) {
-                          var paymentCode =
-                              listPaymentHistory![index].paymentCode;
-                          var total = listPaymentHistory![index].total;
-                          var status = listPaymentHistory![index].status;
-                          var cartItems = listPaymentHistory![index].cartItems;
-                          if (listPaymentHistory!.isNotEmpty) {
+                Expanded(
+                  child: SizedBox(
+                    child: Visibility(
+                        visible: isLoaded,
+                        replacement:
+                            const Center(child: Text('No Transaction History')),
+                        child: ListView.builder(
+                          itemCount: listPaymentHistory?.length,
+                          itemBuilder: (context, index) {
+                            var paymentCode =
+                                listPaymentHistory![index].paymentCode;
+                            var total = listPaymentHistory![index].total;
+                            var status = listPaymentHistory![index].status;
+                            var cartItems =
+                                listPaymentHistory![index].cartItems;
                             return Column(
                               children: [
                                 Container(
@@ -100,8 +103,8 @@ class _ListTransactionHistoryPageState
                                       border: Border.all(
                                           width: 1,
                                           color: isDarkTheme
-                                              ? Colors.white.withOpacity(0.14)
-                                              : Colors.black12),
+                                              ? Colors.white
+                                              : Colors.black87),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
                                     children: [
@@ -109,26 +112,34 @@ class _ListTransactionHistoryPageState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            '#$paymentCode',
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10, 10, 0, 0),
+                                            child: Text(
+                                              '#$paymentCode',
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
                                           Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                0, 10, 10, 0),
                                             alignment: Alignment.center,
-                                            width: 100,
+                                            width: 50,
                                             height: 30,
                                             decoration: BoxDecoration(
                                                 color: const Color(0xff38E54D),
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
                                             child: Text(
-                                              status,
-                                              style: GoogleFonts.salsa(
-                                                  fontSize: 15,
-                                                  color: Colors.black),
-                                            ),
+                                                status == 'paid'
+                                                    ? 'Paid'
+                                                    : status,
+                                                style: const TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black)),
                                           ),
                                         ],
                                       ),
@@ -147,6 +158,9 @@ class _ListTransactionHistoryPageState
                                             children: [
                                               const Divider(),
                                               Container(
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 0, 10, 0),
                                                 width: MediaQuery.of(context)
                                                     .size
                                                     .width,
@@ -241,38 +255,48 @@ class _ListTransactionHistoryPageState
                                                                 const SizedBox(
                                                                   height: 15,
                                                                 ),
-                                                                Column(
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
                                                                   children: [
-                                                                    Container(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .centerLeft,
-                                                                      child:
-                                                                          Text(
-                                                                        '$amount pax x ${currencyformatter.format(int.parse(price))}',
-                                                                        style: TextStyle(
-                                                                            color: isDarkTheme
-                                                                                ? Colors.white
-                                                                                : const Color(0xff136068),
-                                                                            fontSize: 12,
-                                                                            fontWeight: FontWeight.w100),
-                                                                      ),
+                                                                    Column(
+                                                                      children: [
+                                                                        Container(
+                                                                          alignment:
+                                                                              Alignment.centerLeft,
+                                                                          child:
+                                                                              Text(
+                                                                            '$amount pax x ${currencyformatter.format(int.parse(price))}',
+                                                                            style: TextStyle(
+                                                                                color: isDarkTheme ? Colors.white : const Color(0xff136068),
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.w100),
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          alignment:
+                                                                              Alignment.centerLeft,
+                                                                          child:
+                                                                              Text(
+                                                                            currencyformatter.format(total),
+                                                                            style: TextStyle(
+                                                                                color: isDarkTheme ? Colors.white : const Color(0xff136068),
+                                                                                fontSize: 18,
+                                                                                fontWeight: FontWeight.w100),
+                                                                          ),
+                                                                        )
+                                                                      ],
                                                                     ),
-                                                                    Container(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .centerLeft,
+                                                                    const Padding(
+                                                                      padding: EdgeInsets
+                                                                          .fromLTRB(
+                                                                              0,
+                                                                              0,
+                                                                              10,
+                                                                              0),
                                                                       child:
-                                                                          Text(
-                                                                        currencyformatter
-                                                                            .format(total),
-                                                                        style: TextStyle(
-                                                                            color: isDarkTheme
-                                                                                ? Colors.white
-                                                                                : const Color(0xff136068),
-                                                                            fontSize: 18,
-                                                                            fontWeight: FontWeight.w100),
-                                                                      ),
+                                                                          ReviewButtonTransaction(),
                                                                     )
                                                                   ],
                                                                 )
@@ -296,7 +320,7 @@ class _ListTransactionHistoryPageState
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Column(
                                               crossAxisAlignment:
@@ -325,22 +349,18 @@ class _ListTransactionHistoryPageState
                                             ),
                                           ],
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
                             );
-                          } else if (listPaymentHistory!.isEmpty) {
-                            return const Center(
-                                child: Text('No Transaction History'));
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
-                      )),
+                          },
+                        )),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
                 )
               ],
             ),

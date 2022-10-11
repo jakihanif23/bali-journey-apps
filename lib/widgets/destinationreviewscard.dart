@@ -16,7 +16,7 @@ class DestinationReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 377,
-      height: 191,
+      height: 150,
       decoration: BoxDecoration(
           color: const Color(0xffD9F9F8),
           borderRadius: BorderRadius.circular(10)),

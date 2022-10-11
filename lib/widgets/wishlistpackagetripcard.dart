@@ -23,7 +23,7 @@ class WishlistPackageTripCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-      height: 133,
+      height: 150,
       child: Row(
         children: [
           Container(

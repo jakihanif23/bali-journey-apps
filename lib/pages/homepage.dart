@@ -7,6 +7,7 @@ import 'package:wisata_bali/apiservices/categoryapi.dart';
 import 'package:wisata_bali/apiservices/homeapi.dart';
 import 'package:wisata_bali/apiservices/userapi.dart';
 import 'package:wisata_bali/detailpage/detaildestination.dart';
+import 'package:wisata_bali/detailpage/detaildestination_user.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/category.dart';
 import 'package:wisata_bali/models/homemodel.dart';
@@ -242,15 +243,25 @@ class _HomeState extends State<Home> {
                               padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(CupertinoPageRoute(
-                                      builder: (context) => DetailDestination(
-                                            destinationId:
-                                                destination[index].id,
-                                          )));
+                                  loginChecker
+                                      ? Navigator.of(context).push(
+                                          CupertinoPageRoute(
+                                              builder: (context) =>
+                                                  DetailDestinationUser(
+                                                    destinationId:
+                                                        destination[index].id,
+                                                  )))
+                                      : Navigator.of(context).push(
+                                          CupertinoPageRoute(
+                                              builder: (context) =>
+                                                  DetailDestination(
+                                                    destinationId:
+                                                        destination[index].id,
+                                                  )));
                                 },
                                 child: CardWidgets(
                                     destination[index].images[0].img,
-                                    destination[index].address),
+                                    destination[index].name),
                               ),
                             );
                           },
