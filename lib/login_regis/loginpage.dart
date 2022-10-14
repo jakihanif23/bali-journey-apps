@@ -57,6 +57,51 @@ class _LoginPageState extends State<LoginPage> {
           );
         },
       );
+    } else if (response.statusCode == 308) {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Login Failed'),
+            content: const Text(
+                'Your Account is Temporary Blocked, please Contact the CS'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _emailController.text = '';
+                    _passwordController.text = '';
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
+    } else if (response.statusCode == 307) {
+      showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.ease,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Login Failed'),
+            content: const Text("Can't Reach this account"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    _emailController.text = '';
+                    _passwordController.text = '';
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'))
+            ],
+          );
+        },
+      );
     } else {
       showAnimatedDialog(
         context: context,

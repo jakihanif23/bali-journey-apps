@@ -57,6 +57,7 @@ class _DetailDestinationUserState extends State<DetailDestinationUser> {
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Scaffold(
         body: FutureBuilder<DetailDestinationUserModel>(
             future: futureDestination,
@@ -156,7 +157,7 @@ class _DetailDestinationUserState extends State<DetailDestinationUser> {
                                 height: 10,
                               ),
                               Text(
-                                'Rating ${rating.toString()}',
+                                'Rating ${rating.toStringAsFixed(2)}',
                                 style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
@@ -287,6 +288,8 @@ class _DetailDestinationUserState extends State<DetailDestinationUser> {
                                                         .toString());
                                                 var userName = reviews[index]
                                                     ['user']['name'];
+                                                var image = reviews[index]
+                                                    ['user']['images'];
                                                 return Container(
                                                     padding: const EdgeInsets
                                                         .fromLTRB(0, 0, 10, 0),
@@ -296,6 +299,7 @@ class _DetailDestinationUserState extends State<DetailDestinationUser> {
                                                           height: 10,
                                                         ),
                                                         DestinationReviewCard(
+                                                          image: image,
                                                           name: userName,
                                                           rating: rating,
                                                           comment: comment,

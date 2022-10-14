@@ -64,7 +64,7 @@ class PackageTripCard extends StatelessWidget {
                           child: RatingBarIndicator(
                         rating: rating,
                         itemCount: 5,
-                        itemSize: 23,
+                        itemSize: 30,
                         itemBuilder: (context, index) => const Icon(
                           Icons.star,
                           color: Colors.amber,
@@ -78,8 +78,8 @@ class PackageTripCard extends StatelessWidget {
                               color: isDarkTheme
                                   ? Colors.white
                                   : const Color(0xff136068),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w100),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300),
                         ),
                       )
                     ],

@@ -22,7 +22,7 @@ class WishlistDestinationCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-      height: 133,
+      height: 150,
       child: Row(
         children: [
           Container(
@@ -53,14 +53,12 @@ class WishlistDestinationCard extends StatelessWidget {
                   ),
                   Container(
                     child: RatingBarIndicator(
-                      itemSize: 20,
+                      itemSize: 30,
                       itemCount: 5,
                       rating: rating,
-                      itemBuilder: (contex, index) => Icon(
+                      itemBuilder: (contex, index) => const Icon(
                         Icons.star,
-                        color: isDarkTheme
-                            ? Colors.white
-                            : const Color(0xff136068),
+                        color: Colors.amber,
                       ),
                     ),
                   ),

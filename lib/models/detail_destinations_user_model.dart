@@ -34,7 +34,7 @@ class DetailDestinationUserModel {
   int id;
   String name;
   int categoryId;
-  double rating;
+  num rating;
   String description;
   String address;
   String openDay;
@@ -54,7 +54,7 @@ class DetailDestinationUserModel {
         id: json["id"],
         name: json["name"],
         categoryId: json["categoryId"],
-        rating: double.parse(json["rating"].toString()),
+        rating: json["rating"],
         description: json["description"],
         address: json["address"],
         openDay: json["open_day"],

@@ -52,7 +52,7 @@ class WishlistPackageTripCard extends StatelessWidget {
                   ),
                   Container(
                     child: RatingBarIndicator(
-                      itemSize: 20,
+                      itemSize: 30,
                       itemCount: 5,
                       rating: rating,
                       itemBuilder: (contex, index) => const Icon(
@@ -60,24 +60,6 @@ class WishlistPackageTripCard extends StatelessWidget {
                         color: Color(0xff136068),
                       ),
                     ),
-                  ),
-                  const Text(
-                    'Pickup Point',
-                    style: TextStyle(color: Color(0xff136068), fontSize: 10),
-                  ),
-                  const Text(
-                    'Ngurah Rai Airport',
-                    style: TextStyle(
-                        color: Color(0xff136068),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const Text(
-                    '13.00 WITA',
-                    style: TextStyle(
-                        color: Color(0xff136068),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
                   ),
                   Text(
                     '${currencyformatter.format(int.parse(price))}/pax',

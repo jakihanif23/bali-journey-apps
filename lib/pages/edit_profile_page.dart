@@ -26,11 +26,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
-  getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('jwt').toString();
-  }
-
   updateProfile(String name, String email, String password, String token,
       String filepath) async {
     final payload = {'name': name, 'email': email, 'password': password};

@@ -29,7 +29,7 @@ class DetailPackageTripUserModel {
   String name;
   String description;
   String price;
-  int rating;
+  dynamic rating;
   bool isWishlist;
   dynamic idWishlist;
   List<DetailPackageTripUserModelImage> images;
@@ -89,7 +89,7 @@ class Destination {
   int id;
   String name;
   int categoryId;
-  int rating;
+  dynamic rating;
   String description;
   String address;
   String openDay;

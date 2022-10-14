@@ -9,8 +9,8 @@ import 'package:wisata_bali/detailpage/detaildestination_user.dart';
 import 'package:wisata_bali/detailpage/detailpackagetrip.dart';
 import 'package:wisata_bali/models/wishlist_destination_model.dart';
 import 'package:wisata_bali/models/wishlist_packagetrip_model.dart';
+import 'package:wisata_bali/widgets/packagetripcard.dart';
 import 'package:wisata_bali/widgets/wishlistdestinationcard.dart';
-import 'package:wisata_bali/widgets/wishlistpackagetripcard.dart';
 
 class Wishlist extends StatefulWidget {
   const Wishlist({Key? key}) : super(key: key);
@@ -204,11 +204,11 @@ class _WishlistState extends State<Wishlist> with TickerProviderStateMixin {
                                                     DetailPackageTrip(
                                                         packageTripId: id)));
                                   },
-                                  child: WishlistPackageTripCard(
-                                    title: title,
-                                    image: img,
-                                    rating: rating,
-                                    price: price,
+                                  child: PackageTripCard(
+                                    title,
+                                    img,
+                                    price,
+                                    rating,
                                   ),
                                 );
                               },

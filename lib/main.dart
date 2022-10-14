@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
-        title: 'Bali App Journey',
+        title: 'Bali Journey Apps',
         theme: ThemeData(textTheme: GoogleFonts.latoTextTheme(textTheme)),
         darkTheme: ThemeData.dark(),
         home: HomePage());

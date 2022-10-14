@@ -73,7 +73,7 @@ class CartItem {
   int amount;
   String name;
   String price;
-  int rating;
+  dynamic rating;
   List<DataImage> images;
 
   factory CartItem.fromJson(Map<String, dynamic> json) => CartItem(

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_bali/apiservices/paymentapi.dart';
+import 'package:wisata_bali/detailpage/review_page_packageTrip.dart';
 import 'package:wisata_bali/models/list_payment_history_model.dart';
 import 'package:wisata_bali/widgets/review_button_transaction.dart';
 
@@ -153,7 +155,14 @@ class _ListTransactionHistoryPageState
                                           var amount = cartItems[index].amount;
                                           var image =
                                               cartItems[index].images[0].img;
+                                          var id =
+                                              cartItems[index].packageTripId;
                                           var total = amount * int.parse(price);
+                                          var name = cartItems[index].name;
+                                          var rating = double.parse(
+                                              cartItems[index]
+                                                  .rating
+                                                  .toString());
                                           return Column(
                                             children: [
                                               const Divider(),
@@ -288,15 +297,18 @@ class _ListTransactionHistoryPageState
                                                                         )
                                                                       ],
                                                                     ),
-                                                                    const Padding(
-                                                                      padding: EdgeInsets
-                                                                          .fromLTRB(
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.fromLTRB(
                                                                               0,
                                                                               0,
                                                                               10,
                                                                               0),
-                                                                      child:
-                                                                          ReviewButtonTransaction(),
+                                                                      child: InkWell(
+                                                                          onTap: () {
+                                                                            Navigator.of(context, rootNavigator: true).push(CupertinoPageRoute(builder: (builder) => ReviewPackageTrip(id: id.toString(), price: price, name: name, rating: rating, image: image)));
+                                                                          },
+                                                                          child: const ReviewButtonTransaction()),
                                                                     )
                                                                   ],
                                                                 )

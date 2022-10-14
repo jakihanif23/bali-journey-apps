@@ -1,27 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 
-class SearchCard extends StatelessWidget {
+class ReviewPackageTripDetailCard extends StatelessWidget {
   final String title;
   final double rating;
-  final String category;
-  final String location;
+  final int price;
   final String image;
-
-  const SearchCard(
-      {Key? key,
-      required this.category,
+  const ReviewPackageTripDetailCard(
+      {super.key,
       required this.title,
       required this.rating,
-      required this.location,
-      required this.image})
-      : super(key: key);
+      required this.price,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
     final isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final currencyformatter =
+        NumberFormat.currency(locale: 'ID', symbol: 'Rp. ');
     return CachedNetworkImage(
         imageUrl: 'https://api-bali-journey.herokuapp.com/$image',
         imageBuilder: (context, imageProvider) => Container(
@@ -60,19 +59,20 @@ class SearchCard extends StatelessWidget {
                               child: RatingBarIndicator(
                             rating: rating,
                             itemCount: 5,
-                            itemSize: 25,
+                            itemSize: 30,
                             itemBuilder: (context, index) => const Icon(
                               Icons.star,
                               color: Colors.amber,
                             ),
                           )),
                           Text(
-                            category,
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                          Text(
-                            location,
-                            style: const TextStyle(fontSize: 14),
+                            currencyformatter.format(price),
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: isDarkTheme
+                                    ? Colors.white
+                                    : const Color(0xff136068)),
                           )
                         ],
                       ),

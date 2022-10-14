@@ -26,7 +26,7 @@ class PackageTripModel {
   String name;
   String description;
   String price;
-  int rating;
+  dynamic rating;
   List<ImageData> images;
   List<dynamic> destinations;
   List<dynamic> reviews;

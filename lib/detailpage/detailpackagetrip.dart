@@ -112,7 +112,7 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                             height: 10,
                           ),
                           Text(
-                            'Rating ${rating.toString()}',
+                            'Rating ${rating.toStringAsFixed(2)}',
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -300,20 +300,40 @@ class _DetailPackageTripState extends State<DetailPackageTrip> {
                                           itemCount:
                                               snapshot.data!.reviews.length,
                                           itemBuilder: (context, index) {
+                                            var name = snapshot.data!
+                                                .reviews[index]['user']['name'];
+                                            var comment = snapshot.data!
+                                                .reviews[index]['comment'];
+                                            var image =
+                                                snapshot.data!.reviews[index]
+                                                    ['user']['images'];
+                                            var rating = double.parse(snapshot
+                                                .data!.reviews[index]['rating']
+                                                .toString());
                                             return snapshot
                                                     .data!.reviews.isEmpty
-                                                ? const Center(
+                                                ? Center(
                                                     child:
-                                                        PackageTripReviewCard())
+                                                        PackageTripReviewCard(
+                                                    image: image,
+                                                    name: name,
+                                                    comment: comment,
+                                                    rating: rating,
+                                                  ))
                                                 : Container(
                                                     padding: const EdgeInsets
                                                         .fromLTRB(0, 0, 10, 0),
                                                     child: Column(
-                                                      children: const [
-                                                        SizedBox(
+                                                      children: [
+                                                        const SizedBox(
                                                           height: 10,
                                                         ),
-                                                        PackageTripReviewCard()
+                                                        PackageTripReviewCard(
+                                                          image: image,
+                                                          name: name,
+                                                          comment: comment,
+                                                          rating: rating,
+                                                        )
                                                       ],
                                                     ),
                                                   );

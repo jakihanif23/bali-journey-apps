@@ -2,7 +2,7 @@
     package="com.example.wisata_bali.wisata_bali">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="wisata_bali"
+        android:label="Bali Journey Apps"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
